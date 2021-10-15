@@ -1,0 +1,1 @@
+Download the [latest SystemSizer.exe here](https://github.com/AquaticInformatics/getting-started/releases/SystemSizer)
