@@ -101,7 +101,7 @@ Command-line parameters will override JSON template parameters of the same name.
 This is the main use case for `ReportRunner.exe`.
 
 AQTS 2019.3 ships with `ReportRunner.exe` installed on the server at this default path: 
-`%ProgramFiles%\Aquatic Informatics\AQUARIUS Server\ProductReports\ReportRunner.exe`.
+`%ProgramFiles%\Aquatic Informatics\AQUARIUS Server\ReportPluginPackages\ReportRunner.exe`.
 
 You can also download `ReportRunner.exe` from [AI Source](https://github.com/AquaticInformatics/getting-started/releases/tag/ReportRunner) and run it from any Windows computer on your network.
 
