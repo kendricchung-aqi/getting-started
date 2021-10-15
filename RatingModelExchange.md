@@ -1,0 +1,1 @@
+Download the [latest RatingModelEchange.exe here](https://github.com/AquaticInformatics/getting-started/releases/RatingModelExchange)
