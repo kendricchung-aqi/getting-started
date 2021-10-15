@@ -1,4 +1,4 @@
-Download the [latest ReportRunner.exe here](https://github.com/AquaticInformatics/getting-started/releases/download/ReportRunner/ReportRunner.exe)
+Download the [latest ReportRunner.exe here](https://github.com/AquaticInformatics/getting-started/releases/ReportRunner)
 
 # ReportRunner
 
