@@ -8,6 +8,13 @@ This tool supports the flexible [`@options.txt` syntax](https://github.com/Aquat
 
 The ProvisioningTool allows you to perform bulk provisioning operations on various types of AQUARIUS items for AQUARIUS Time-Series systems running 2018.3-or-newer.
 
+## Installation
+
+- Download the `ProvisioningTool.zip` archive
+- Extract the Zip archive to a new folder
+- See the `SampleFiles` subfolder for examples of different CSV data files.
+- Open a CMD.EXE, bash shell, or Powershell window to the folder, and run the commands.
+
 # Running a provisioning task
 
 The tool can accept multiple `/task="operation item filename"` options. The tool will perform the operations in the order in which they are specified.
