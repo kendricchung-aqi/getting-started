@@ -1,0 +1,1 @@
+Download the [latest AqsAttachmentUploader.exe here](https://github.com/AquaticInformatics/getting-started/releases/AqsAttachmentUploader)
