@@ -1,5 +1,11 @@
 Download the [latest SystemSizer.exe here](https://github.com/AquaticInformatics/getting-started/releases/SystemSizer)
 
+### Allow outbound TCP connections on port 22 to `sftp.aquaticinformatics.com` and everything will be automatic.
+
+The simplest thing you can do is allow your app server to connect to the Support Team's SFTP server to make the secure file transfer.
+
+# SystemSizer - Capture the last week of AQUARIUS product activity for analysis
+
 `SystemSizer.exe` is a console tool used to troubleshoot AQUARIUS platform products.
 
 The tool performs a number of inspections on your systems running AQUARIUS products:
@@ -33,6 +39,12 @@ If your app server can reach the internet, a ZIP of all the relevant logs will b
 
 ### My app server is blocked from the internet. What do I do?
 
+- Allow outbound TCP connections on port 22 to `sftp.aquaticinformatics.com` and everything will be automatic.
+
+That's the simplest thing you can do is allow your app server to connect to the Support Team's SFTP server to make the secure file transfer. Then you won't need to keep reading.
+
+### My IT department won't allow any external internet access from our app server.
+
 That's OK. It is common for AQUARIUS app servers to be blocked from the internet by many IT departments.
 
 When SystemSizer is unable to connect to the AI SFTP site, it just leaves the ZIP file on disk, in the same folder as the SystemSizer.exe. The ZIP file will be named **SystemSizer-_{MachineName}_-_{yyyyMMddHHmmss}_.zip**, substituting you app server's name and the current time.
@@ -41,13 +53,17 @@ You will need to send the ZIP file to the AI Support Team somehow. There are a f
 
 **1) On an internet-capable computer, put the ZIP and EXE into the same folder and double click the EXE.**
 
+An "Internet-capable computer" in this context is one which is allowed to make outbound TCP connections on port 22 to `sftp.aquaticinformatics.com`.
+
+In locked-down environments, application servers are often blocked from any internet access, but some client computers are typically allowed to browse the web in some form.
+
 When **SystemSizer.exe** starts, it will attempt to upload any unsent ZIPs in the same folder. This feature allows you to quickly "leap frog" between systems to exfiltrate the ZIP to the AI Support team.
 
 Here is the SystemSizer ZIP and EXE on my app server with no internet connectivity:
 
 ![ZIP on blocked app server](https://raw.githubusercontent.com/AquaticInformatics/getting-started/master/images/SystemSizeOnFirewallAppServer.png)
 
-I can use Windows Explorer to browse to that folder over my local network:
+I can use Windows Explorer to browse to that folder over my local network from my internet-capable desktop:
 
 ![ZIP via local network](https://raw.githubusercontent.com/AquaticInformatics/getting-started/master/images/BrowseToAppServerFolder.png)
 
