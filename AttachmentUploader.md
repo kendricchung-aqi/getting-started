@@ -1,0 +1,1 @@
+Download the [latest AttachmentUploader.exe here](https://github.com/AquaticInformatics/getting-started/releases/AttachmentUploader)
