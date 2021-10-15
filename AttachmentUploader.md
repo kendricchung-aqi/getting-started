@@ -28,7 +28,7 @@ This option is useful when debugging the layout of files or ZIP archives being u
 You can inspect the `AttachmentUploader.log` for `WARN` messages, and resolve any complaints before trying the uploads for real.
 
 |`WARN` message pattern|Resolution|
-|===|===|
+|---|---|
 |Skipping unknown location identifier '*path*'<br/>Skipping file '*path*' with no location folder context. | Add a [location alias](#location-identifier-aliases). |
 |No field visit time extracted from '*path*'. | Add a [`/DateTimeFormat`](#specifying-field-visit-datetime-patterns-in-filenames) option. |
 |Can't find existing visit at *date* for '*path*' | Upload the missing visit and try again. |
