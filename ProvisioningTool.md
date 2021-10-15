@@ -1,0 +1,1 @@
+Download the [latest ProvisioningTool.zip here](https://github.com/AquaticInformatics/getting-started/releases/ProvisioningTool)
