@@ -175,7 +175,7 @@ Then the files would be uploaded to the 1111 and 2222 locations, instead of seei
 
 ## Converting video files to MP4
 
-Many common video file formats are quite large. (AVI files and MOV files from phones are generally large and uncompressed). AQSamples has a maximum file upload size of 100 MB per file. It is very easy for uncompressed video to exceed this limit.
+Many common video file formats are quite large. (AVI files and MOV files from phones are generally large and uncompressed). AQSamples has a maximum file upload size of 20 MB per file. It is very easy for uncompressed video to exceed this limit.
 
 The uploader tool can detect these video formats (and others) and use the `ConvertToMP4.exe` tool to convert these larger files into compressed MP4 video files, which tend to be 4x-10x smaller for the same resolution, and play back nicely in all modern browsers.
 
@@ -323,7 +323,7 @@ Supported -option=value settings (/option=value works too):
   -DateTimeFormats                Datetime formats to match in filenames. [default: yyyy-MM-dd]
   -UploadUnknownVisitAttachments  Upload unknown visit attachments as location attachments instead. [default: False]
   -IgnoreFiles                    Filenames to ignore [default: .ppinfocache, Thumbs.db, Desktop.ini, .DS_Store]
-  -UploadLimitMB                  Upload file size limit in megabytes [default: 40]
+  -UploadLimitMB                  Upload file size limit in megabytes [default: 20]
   -ConvertToMP4Path               Path to the ConvertToMP4.exe utility, used to convert videos to MP4 format before upload.
   -LocationAlias                  Add location aliases in LocationAlias=alias:locationIdentifier form
 
