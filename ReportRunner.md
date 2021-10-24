@@ -46,7 +46,7 @@ Supported -option=value settings (/option=value works too):
 
 ======================== Report parameters, which override any values loaded from JSON
 -ReportType              The report output type.
--ReportName              The name of AQTS report
+-ReportName              The name of AQTS report. Use the /Command=List option to list the installed reports.
 -Locale                  The locale of the generated report [default: en]
 -RelativeTimeRange       Sets the relative time range for the report
 -UtcOffset               Set the UTC Offset used in report requests. Defaults to the UTC offset of the first time-series.
@@ -287,6 +287,12 @@ $ ./ReportRunner.exe -server=doug-vm2012r2 list
 ```
 
 ReportRunner recognizes the command keywords `List`, `CreateTemplate`, and `Run` without needing the `/Command=` prefix, to save you a few keystrokes.
+
+When the `/ReportName=xxx` option is used, the name should match a name from `/Command=LIST` output.
+
+Many report names contain a space, so they will need to be quoted if specified on the command line, but can be unquoted if used from an an `@options.txt` file. See the [common command line options](https://github.com/AquaticInformatics/examples/wiki/Common-command-line-options) section for details.
+
+
 
 ## 5 - Create a JSON template from the command line
 
