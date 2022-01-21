@@ -50,7 +50,7 @@ With the `mytasks.txt` file as the following 6 lines:
 
 | Item | File format | Create | Update | Delete |
 | --- | --- | --- | --- | --- |
-| [[Parameter]]                      | csv, xls | Y | Y | N |
+| Parameter                      | csv, xls | Y | Y | N |
 | Unit                           | csv, xls | Y | Y | N |
 | UnitGroup                      | csv      | Y | Y | Y |
 | MonitoringMethod               | csv      | Y | Y | Y |
