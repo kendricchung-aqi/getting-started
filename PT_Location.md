@@ -1,2 +1,0 @@
-# ProvisioningTool - Location tasks
-
