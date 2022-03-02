@@ -63,14 +63,12 @@ Click on the **Task** column to get detailed information for a specific task.
 | FolderUserRole                 | csv      | Y | Y | Y |
 | LocationUserRole               | csv      | Y | Y | Y |
 | PrimaryFolder                  | csv      | Y | Y | Y |
-| LocationExtendedAttributes     | csv, xls | Y | Y | N |
 | TimeSeriesExtendedAttributes   | csv, xls | Y | Y | N |
 | SecondaryFolder                | csv      | Y | N | N |
 | Approval                       | csv, xls | Y | Y | Y |
 | GlobalSetting                  | csv      | Y | Y | Y |
 | LocationNote                   | csv      | Y | Y | Y |
 | Tag                            | csv      | Y | Y | Y |
-| LocationTag                    | csv      | Y | Y | Y |
 | StandardDatum                  | csv      | Y | N | Y |
 | ReferencePoint                 | csv      | Y | Y | Y |
 | ReferencePointPeriod           | csv      | Y | Y | N |
@@ -177,7 +175,6 @@ Supported Data names:
     FolderUserRole
     UnitGroup
     PrimaryFolder
-    LocationExtendedAttributes
     TimeSeriesExtendedAttributes
     SecondaryFolder
     Approval
@@ -193,7 +190,6 @@ Supported Data names:
     ReferencePoint
     ReferencePointPeriod
     Tag
-    LocationTag
     StandardDatum
     LocationStandardDatum
     LocalAssumedDatumPeriod
