@@ -18,7 +18,7 @@
 | UniqueId | `b2c1b04f9e0547e7a23f9709137ddc7d` | This column is ignored in CREATE tasks, but can be used in UPDATE tasks. You can use either the `UniqueId` or `LocationIdentifier` column to specify the location whose other properties will be updated. If both columns are used, `UniqueId` takes precedence. |
 | UpdatedIdentifier | `05JJ009_OLD` | This column is ignored in CREATE tasks, but can be used in UPDATE tasks to change the identifier text of a location when the column value is not an empty string. |
 | Tag:*{key}* |  | Column headers beginning with "Tag:" followed by the key of the tag can be used to assign a tag value to a location. The tag must be configured with AppliesToLocations = true in order to set a value for the location. |
-| Ext:*{key}* | `REGINA` for `Ext:Office` | Column headers beginning with "Ext:" followed by the key of the extended attribute can be used to assign an extended attribute value to a location. The extended attribute must be configured with AppliesToLocations = true in order to set a value for the location. |
+| Ext:*{key}* | `REGINA` for `Ext:Office` | Column headers beginning with "Ext:" followed by the key of the extended attribute can be used to assign an extended attribute value to a location. The extended attribute must be configured with AppliesToLocations = true or AppliesToLocationTypes = true in order to set a value for the location. |
 
 ## Format of the `UpdateLocations.csv` file
 
@@ -34,24 +34,36 @@ Notes:
 
 The ProvisioningTool supports the setting of any configured tag or extended attribute values. These values are identified by column names beginning with the `Tag:` or `Ext:` prefix. The appropriate tag or extended attribute key name follows the colon.
 
-For the Hydex sync, there are four extended attributes which can be set on a location:
+Assume there are four extended attributes which can be set on a location:
 
-| CSV column header | Extended attribute name | Example value |
+| CSV column header | Extended attribute display name | Example value |
 |---|---|---|
-| `Ext:Province` | Province | `SASKATCHEWAN` |
-| `Ext:Office` | Office | `REGINA` |
-| `Ext:User` | User | `SUSAN.SMITH` |
-| `Ext:Status` | Status | `ACTIVE` |
+| `Ext:Province` | `Province` | `SASKATCHEWAN` |
+| `Ext:Office` | `Office` | `REGINA` |
+| `Ext:User` | `User` | `SUSAN.SMITH` |
+| `Ext:Status` | `Status` | `ACTIVE` |
 
-## Example `CurrentHydexLocations.csv` file
+Also assume these two Location tags have been configured (with `AppliesToLocations` applicability):
+
+| CSV column header | Tag Key | Tag Type | Example value |
+|---|---|---|---|
+| `Tag:Watershed` | `Watershed` | `PickList`| `Fraser basin` |
+| `Tag:Has Telemetry` | `Has Telemetry` | `None` | _any value_ - The tag will be set.<br/>_empty_ - The tag will be removed. |
+
+The `None` tag type is slightly special. These tags don't have any value. They are simply applied to an item or they are absent from an item.
+If the CSV cell is not empty, then the tag will be set, otherwise it will be removed from the item.
+
+## Example CSV with extended attributes and tags
 
 Here is an example CSV, with a header row and two location rows:
 
 ```csv
-LocationIdentifier, LocationPath, LocationName, LocationType, UtcOffset, Description, Latitude, Longitude, Elevation, ElevationUnits, Publish, Ext:Province, Ext:Office, Ext:User, Ext:Status
-05JJ009, WSC.SASKATCHEWAN.REGINA, SALINE CREEK NEAR NOKOMIS, Hydrology Station, -06:00, The underpass near Hatfield Road., 51.41611, -105.10306, -105.10306, m, false, SASKATCHEWAN, REGINA, SUSAN.SMITH, ACTIVE
-08GA047, WSC.BRITISH COLUMBIA.NANAIMO, ROBERTS CREEK AT ROBERTS CREEK, Hydrology Station, -08:00, Where the bridge crosses the road, 49.42083, -123.64022, 15.3, m, false, BRITISH COLUMBIA, NANAIMO, FRANK.FROLLIC, ACTIVE
+LocationIdentifier, LocationPath, LocationName, LocationType, UtcOffset, Description, Latitude, Longitude, Elevation, ElevationUnits, Publish, Ext:Province, Ext:Office, Ext:User, Ext:Status, Tag:Watershed, Tag:Has Telemetry
+05JJ009, WSC.SASKATCHEWAN.REGINA, SALINE CREEK NEAR NOKOMIS, Hydrology Station, -06:00, The underpass near Hatfield Road., 51.41611, -105.10306, -105.10306, m, false, SASKATCHEWAN, REGINA, SUSAN.SMITH, ACTIVE, , YUP
+08GA047, WSC.BRITISH COLUMBIA.NANAIMO, ROBERTS CREEK AT ROBERTS CREEK, Hydrology Station, -08:00, Where the bridge crosses the road, 49.42083, -123.64022, 15.3, m, false, BRITISH COLUMBIA, NANAIMO, FRANK.FROLLIC, ACTIVE, Fraser basin
 ```
+
+Note that the `Yup` value for the `Tag:Has Telemetry` column could have been any non-blank value. Values of `Yes`, `1`, `OK`, or `I am a teapot` all have the same effect.
 
 ## Renaming an existing location identifier using the UPDATE task
 
