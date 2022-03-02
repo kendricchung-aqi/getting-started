@@ -56,7 +56,7 @@ Click on the **Task** column to get detailed information for a specific task.
 | Unit                           | csv, xls | Y | Y | N |
 | UnitGroup                      | csv      | Y | Y | Y |
 | MonitoringMethod               | csv      | Y | Y | Y |
-| [Location](./PT_Location)                       | csv, xls | Y | Y | N |
+| [[Location]]                       | csv, xls | Y | Y | N |
 | TimeSeries                     | csv, xls | Y | Y | N |
 | Grade                          | csv, xls | Y | Y | Y |
 | Role                           | csv      | Y | Y | Y |
