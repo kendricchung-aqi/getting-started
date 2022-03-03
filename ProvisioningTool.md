@@ -79,7 +79,7 @@ Click on the **Task** column to get detailed information for a specific task. (A
 | [[PicklistDisplayItem]]            | csv      | Y | Y | Y |
 | [[Sensor]]                         | csv      | Y | Y | Y |
 | [[RepairTimeSeries]]               | csv      | N | Y | N |
-| [[ExtendedAttributeSchema]]        | sql      | Y | N | N |
+| [[ExtendedAttributeSchema]]        | sql      | Y | Y | N |
 
 # Sample files
 
