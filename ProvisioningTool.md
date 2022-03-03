@@ -52,38 +52,38 @@ Click on the **Task** column to get detailed information for a specific task.
 
 | Task | File format | Create | Update | Delete |
 | --- | --- | --- | --- | --- |
-| Parameter                      | csv, xls | Y | Y | N |
-| Unit                           | csv, xls | Y | Y | N |
-| UnitGroup                      | csv      | Y | Y | Y |
-| MonitoringMethod               | csv      | Y | Y | Y |
+| [[Parameter]]                      | csv, xls | Y | Y | N |
+| [[Unit]]                           | csv, xls | Y | Y | N |
+| [[UnitGroup]]                      | csv      | Y | Y | Y |
+| [[MonitoringMethod]]               | csv      | Y | Y | Y |
 | [[Location]]                       | csv, xls | Y | Y | N |
-| TimeSeries                     | csv, xls | Y | Y | N |
-| Grade                          | csv, xls | Y | Y | Y |
-| Role                           | csv      | Y | Y | Y |
-| FolderUserRole                 | csv      | Y | Y | Y |
-| LocationUserRole               | csv      | Y | Y | Y |
-| PrimaryFolder                  | csv      | Y | Y | Y |
-| TimeSeriesExtendedAttributes   | csv, xls | Y | Y | N |
-| SecondaryFolder                | csv      | Y | N | N |
-| Approval                       | csv, xls | Y | Y | Y |
-| GlobalSetting                  | csv      | Y | Y | Y |
-| LocationNote                   | csv      | Y | Y | Y |
-| Tag                            | csv      | Y | Y | Y |
-| StandardDatum                  | csv      | Y | N | Y |
-| ReferencePoint                 | csv      | Y | Y | Y |
-| ReferencePointPeriod           | csv      | Y | Y | N |
-| LocationStandardDatum          | csv      | Y | Y | Y |
-| LocalAssumedDatumPeriod        | csv      | Y | Y | Y |
-| DatumReading                   | csv      | N | Y | N |
-| MeasurementGrade               | csv      | N | Y | N |
+| [[TimeSeries]]                     | csv, xls | Y | Y | N |
+| [[Grade]]                          | csv, xls | Y | Y | Y |
+| [[Role]]                           | csv      | Y | Y | Y |
+| [[FolderUserRole]]                 | csv      | Y | Y | Y |
+| [[LocationUserRole]]               | csv      | Y | Y | Y |
+| [[PrimaryFolder]]                  | csv      | Y | Y | Y |
+| [[TimeSeriesExtendedAttributes]]   | csv, xls | Y | Y | N |
+| [[SecondaryFolder]]                | csv      | Y | N | N |
+| [[Approval]]                       | csv, xls | Y | Y | Y |
+| [[GlobalSetting]]                  | csv      | Y | Y | Y |
+| [[LocationNote]]                   | csv      | Y | Y | Y |
+| [[Tag]]                            | csv      | Y | Y | Y |
+| [[StandardDatum]]                  | csv      | Y | N | Y |
+| [[ReferencePoint]]                 | csv      | Y | Y | Y |
+| [[ReferencePointPeriod]]           | csv      | Y | Y | N |
+| [[LocationStandardDatum]]          | csv      | Y | Y | Y |
+| [[LocalAssumedDatumPeriod]]        | csv      | Y | Y | Y |
+| [[DatumReading]]                   | csv      | N | Y | N |
+| [[MeasurementGrade]]               | csv      | N | Y | N |
 | [[PicklistDisplayItem]]            | csv      | Y | Y | Y |
-| Sensor                         | csv      | Y | Y | Y |
-| RepairTimeSeries               | csv      | N | Y | N |
-| ExtendedAttributeSchema        | sql      | Y | N | N |
+| [[Sensor]]                         | csv      | Y | Y | Y |
+| [[RepairTimeSeries]]               | csv      | N | Y | N |
+| [[ExtendedAttributeSchema]]        | sql      | Y | N | N |
 
 # Sample files
 
-Check the included `SampleFiles` for item-specific format examples.
+Check the included `SampleFiles` folder for item-specific format examples.
 
 # Help page (via the `-help` option)
 
