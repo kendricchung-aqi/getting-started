@@ -48,7 +48,7 @@ With the `mytasks.txt` file as the following 6 lines:
 
 # Supported Provisioning Operations
 
-Click on the **Task** column to get detailed information for a specific task.
+Click on the **Task** column to get detailed information for a specific task. (Any task listed in red has not yet been documented in the wiki, so consult the appropriate sample files)
 
 | Task | File format | Create | Update | Delete |
 | --- | --- | --- | --- | --- |
