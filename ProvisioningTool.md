@@ -76,7 +76,7 @@ Click on the **Task** column to get detailed information for a specific task.
 | LocalAssumedDatumPeriod        | csv      | Y | Y | Y |
 | DatumReading                   | csv      | N | Y | N |
 | MeasurementGrade               | csv      | N | Y | N |
-| PicklistDisplayItem            | csv      | Y | Y | Y |
+| [[PicklistDisplayItem]]            | csv      | Y | Y | Y |
 | Sensor                         | csv      | Y | Y | Y |
 | RepairTimeSeries               | csv      | N | Y | N |
 | ExtendedAttributeSchema        | sql      | Y | N | N |
@@ -85,69 +85,23 @@ Click on the **Task** column to get detailed information for a specific task.
 
 Check the included `SampleFiles` for item-specific format examples.
 
-# Configuring your AQTS picklists
-
-The `PicklistDisplayItem` tasks are used to configure the dropdown menus visible in the AQTS system (typically in the browser web forms).
-
-These tasks configure the `PicklistDisplayItem` database table, which stores a localizable list of values.
-
-The AQUARIUS browser apps (Springboard, Field Visit, Location Manager) try to use the current language definition for a list item, falling back to the English item if no language-specific item exists.
-
-### Database credentials are required for picklist and extended attribute schema configuration
-
-The `PicklistDisplayItem` and `ExtendedAttributeSchema` tasks require direct access to the AQTS database.
-
-The `/DbFilename=`, `/DbType=`, and `/DbConnectionString=` command-line options allow you to explicitly provide database credentials when they cannot be inferred from the `/Server=` context.
-
-If you are running `ProvisioningTool.exe` directly on the AQTS app server, or if the `\\server\C$\ProgramData\Aquatic Informatics\AQUARIUS\AquariusDataSource.xml` file is readable over a network share, then the tool should be able to automatically infer the DB credentials for you.
-
-Try to use the automatically inferred DB credentials before manually setting the `/DbFilename=`, `/DbType=`, or `/DbConnectionString=` options.
-
-### Fixed-size vs. Free-form picklists
-
-Picklists fall into one of two categories:
-- **Freeform lists**, where you are free to define as many or as few items as you'd like.
-- **Fixed-sized lists**, where the number of items is fixed. You can change the display names, or add translated versions, but if AQTS is expecting a list of 10 items, your customization must still include 10 items.
-
-Most picklists in the system are fixed-sized lists. The lists can change from release to release, so please contact our Support Team to help guide you through this configuration process.
-
-### AQTS 2018.4 free-form lists
-
-The 2018.4 free-form lists are these `PicklistKey` values:
-
-```
-ConditionType
-ControlType
-DriftCheckType
-FlowOverControlType
-IceAssemblyType
-LevelSurveyMethod
-ReadingQualifierType
-SuspensionWeightType
-ThresholdName
-VelocityObservationMethodType
-ViewModeType
-```
-
-All other picklists are fixed sized lists.
-
 # Help page (via the `-help` option)
 
 ```
-Purpose: Set up system codes,locations,time series etc. on an AQTS 201x server.
+Purpose: Set up system codes,locations,time series etc. on an AQTS 20xx server.
 
 Usage: ProvisioningTool [-option=value] [@optionsFile] ...
 
 Supported -option=value settings (/option=value works too):
 
   ==================== Server credentials (required for all tasks)
-  -Server              The AQTS 201x app server you want to configure.
+  -Server              The AQTS 20xx app server you want to configure.
   -Username            AQTS username. [default: admin]
   -Password            AQTS password. [default: admin]
 
-  ==================== Database credentials (only required for PicklistDisplayItem, ExtendedAttributeSchema, PanelCount tasks)
+  ==================== Database credentials (only required for PicklistDisplayItem, ExtendedAttributeSchema, PanelCount, RepairTimeSeries tasks)
   -DbFilename          The filename of database configuration file.
-  -DbType              Override the database type. One of Unknown, MsSql, Oracle, Postgres. [default: use the DbFilename.]
+  -DbType              Override the database type. One of Unknown, MsSql, Postgres. [default: use the DbFilename.]
   -DbConnectionString  Override the DB connection string [default: use the DbFilename.]
 
   ==================== Task options
@@ -194,5 +148,6 @@ Supported Data names:
     LocationStandardDatum
     LocalAssumedDatumPeriod
     DatumReading
+    Sensor
     RepairTimeSeries.
 ```
