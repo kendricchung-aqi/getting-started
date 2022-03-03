@@ -1,5 +1,8 @@
 # ProvisioningTool - Location tasks
 
+- CREATE and UPDATE operations are supported.
+- DELETE operations are not supported for locations. But you can use the [LocationDeleter.exe tool](https://github.com/AquaticInformatics/examples/tree/master/TimeSeries/PublicApis/SdkExamples/LocationDeleter#locationdeleter) for that.
+
 ## Format of the `CreateLocations.csv` file
 
 | Column Header | Example value| Description |
