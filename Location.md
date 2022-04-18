@@ -25,7 +25,7 @@
 
 ## Format of the `UpdateLocations.csv` file
 
-The same CSV file format for the `-Task="CREATE Location CreateLocations.csv"` task can also be used for the `-Task="UPDATE Location UpdateLocations.csv"` task. But the CSV shape of an UPDATE task can be much thinner, only needing to supply one column to select a location, plus oen column for each property to update.
+The same CSV file format for the `-Task="CREATE Location CreateLocations.csv"` task can also be used for the `-Task="UPDATE Location UpdateLocations.csv"` task. But the CSV shape of an UPDATE task can be much thinner, only needing to supply one column to select a location, plus one column for each property to update.
 
 The UPDATE LOCATION task needs a CSV with at least a LocationIdentifier or UniqueId column, plus any other columns of the location to be updated. Any columns not included in the CSV will not be modified.
 
