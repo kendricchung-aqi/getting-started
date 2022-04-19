@@ -63,7 +63,6 @@ Click on the **Task** column to get detailed information for a specific task. (A
 | [[FolderUserRole]]                 | csv      | Y | Y | Y |
 | [[LocationUserRole]]               | csv      | Y | Y | Y |
 | [[PrimaryFolder]]                  | csv      | Y | Y | Y |
-| [[TimeSeriesExtendedAttributes]]   | csv, xls | Y | Y | N |
 | [[SecondaryFolder]]                | csv      | Y | N | N |
 | [[Approval]]                       | csv, xls | Y | Y | Y |
 | [[GlobalSetting]]                  | csv      | Y | Y | Y |
@@ -129,7 +128,6 @@ Supported Data names:
     FolderUserRole
     UnitGroup
     PrimaryFolder
-    TimeSeriesExtendedAttributes
     SecondaryFolder
     Approval
     GlobalSetting
