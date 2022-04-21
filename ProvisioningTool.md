@@ -52,7 +52,7 @@ Click on the **Task** column to get detailed information for a specific task. (A
 
 | Task | File format | Create | Update | Delete |
 | --- | --- | --- | --- | --- |
-| [[Parameter]]                      | csv, xls | Y | Y | N |
+| [[Parameter]]                      | csv, xls | Y | Y | Y |
 | [[Unit]]                           | csv, xls | Y | Y | N |
 | [[UnitGroup]]                      | csv      | Y | Y | Y |
 | [[MonitoringMethod]]               | csv      | Y | Y | Y |
