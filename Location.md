@@ -51,10 +51,14 @@ Also assume these two Location tags have been configured (with `AppliesToLocatio
 | CSV column header | Tag Key | Tag Type | Example value |
 |---|---|---|---|
 | `Tag:Watershed` | `Watershed` | `PickList`| `Fraser basin` |
-| `Tag:Has Telemetry` | `Has Telemetry` | `None` | _any value_ - The tag will be set.<br/>_empty_ - The tag will be removed. |
+| `Tag:Has Telemetry` | `Has Telemetry` | `None` | _any "Falsey" value_ - The tag will be removed.<br/>_any other value_ - The tag will be set.<br/><br/>See [below for details](#none-tag-type-boolean-values). |
 
-The `None` tag type is slightly special. These tags don't have any value. They are simply applied to an item or they are absent from an item.
-If the CSV cell is not empty, then the tag will be set, otherwise it will be removed from the item.
+### `None` tag type boolean values
+
+The `None` tag type is treated as a slightly special case. These tags don't have any value. They are simply applied to an item (ie. enabled) or they are absent from an item (ie. disabled).
+
+- **Disabled** for any of these seven "False-ish" value: blank/empty, `False`, `F`, `No`, `N`, `Off`, or `0` (case-insensitive).
+- **Enabled** for any other value.
 
 ## Example CSV with extended attributes and tags
 
@@ -66,7 +70,7 @@ LocationIdentifier, LocationPath, LocationName, LocationType, UtcOffset, Descrip
 08GA047, WSC.BRITISH COLUMBIA.NANAIMO, ROBERTS CREEK AT ROBERTS CREEK, Hydrology Station, -08:00, Where the bridge crosses the road, 49.42083, -123.64022, 15.3, m, false, BRITISH COLUMBIA, NANAIMO, FRANK.FROLLIC, ACTIVE, Fraser basin
 ```
 
-Note that the `Yup` value for the `Tag:Has Telemetry` column could have been any non-blank value. Values of `Yes`, `1`, `OK`, or `I am a teapot` all have the same effect.
+Note that the `Yup` value for the `Tag:Has Telemetry` column could have been any non-False-ish value. Values of `Yes`, `1`, `OK`, or `I am a teapot` all have the same effect.
 
 ## Renaming an existing location identifier using the UPDATE task
 
