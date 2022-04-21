@@ -53,13 +53,14 @@ Click on the **Task** column to get detailed information for a specific task. (A
 | Task | File format | Create | Update | Delete |
 | --- | --- | --- | --- | --- |
 | [[Parameter]]                      | csv, xls | Y | Y | Y |
-| [[Unit]]                           | csv, xls | Y | Y | N |
-| [[UnitGroup]]                      | csv      | Y | Y | Y |
-| [[MonitoringMethod]]               | csv      | Y | Y | Y |
+| [[Unit]]                           | csv, xls | Y | Y | Y |
+| [[UnitGroup]]                      | csv, xls | Y | Y | Y |
+| [[MonitoringMethod]]               | csv, xls | Y | Y | Y |
 | [[LocationType]]                   | csv, xls | Y | Y | Y |
 | [[Location]]                       | csv, xls | Y | Y | N |
 | [[TimeSeries]]                     | csv, xls | Y | Y | N |
 | [[Grade]]                          | csv, xls | Y | Y | Y |
+| [[Qualifier]]                      | csv, xls | Y | Y | Y |
 | [[Role]]                           | csv      | Y | Y | Y |
 | [[FolderUserRole]]                 | csv      | Y | Y | Y |
 | [[LocationUserRole]]               | csv      | Y | Y | Y |
@@ -107,6 +108,7 @@ Supported -option=value settings (/option=value works too):
   ==================== Task options
   -Task                The setup task to perform. Use quotation marks. E.g., Task="create grade c:\Input\grades.csv"
   -SkipConfirmation    Set to true to confirm tasks to be performed. [default: False]
+  -AllowOverwrite      When true, an Export operation can overwrite an existing file. [default: False]
 
 Use the @optionsFile syntax to read more options from a file.
 
@@ -117,7 +119,8 @@ Use the @optionsFile syntax to read more options from a file.
 Valid Operations:
     Create
     Update
-    Delete.
+    Delete
+    Export.
 
 Supported Data names:
     Parameter
@@ -130,6 +133,7 @@ Supported Data names:
     UnitGroup
     PrimaryFolder
     SecondaryFolder
+    LocationType
     Approval
     GlobalSetting
     PicklistDisplayItem
@@ -148,5 +152,6 @@ Supported Data names:
     LocalAssumedDatumPeriod
     DatumReading
     Sensor
-    RepairTimeSeries.
+    RepairTimeSeries
+    Qualifier.
 ```
