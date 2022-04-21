@@ -56,6 +56,7 @@ Click on the **Task** column to get detailed information for a specific task. (A
 | [[Unit]]                           | csv, xls | Y | Y | N |
 | [[UnitGroup]]                      | csv      | Y | Y | Y |
 | [[MonitoringMethod]]               | csv      | Y | Y | Y |
+| [[LocationType]]                   | csv, xls | Y | Y | Y |
 | [[Location]]                       | csv, xls | Y | Y | N |
 | [[TimeSeries]]                     | csv, xls | Y | Y | N |
 | [[Grade]]                          | csv, xls | Y | Y | Y |
