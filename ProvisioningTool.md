@@ -48,19 +48,21 @@ With the `mytasks.txt` file as the following 6 lines:
 
 # Supported Provisioning Operations
 
-Click on the **Task** column to get detailed information for a specific task. (Any task listed in red has not yet been documented in the wiki, so consult the appropriate sample files)
+Click on the **Task** column to get detailed information for a specific task.
 
-| Task | File format | Create | Update | Delete |
-| --- | --- | --- | --- | --- |
-| [[Parameter]]                      | csv, xls | Y | Y | Y |
-| [[Unit]]                           | csv, xls | Y | Y | Y |
-| [[UnitGroup]]                      | csv, xls | Y | Y | Y |
-| [[MonitoringMethod]]               | csv, xls | Y | Y | Y |
-| [[LocationType]]                   | csv, xls | Y | Y | Y |
-| [[Location]]                       | csv, xls | Y | Y | N |
-| [[TimeSeries]]                     | csv, xls | Y | Y | N |
-| [[Grade]]                          | csv, xls | Y | Y | Y |
-| [[Qualifier]]                      | csv, xls | Y | Y | Y |
+(Any task listed in red has not yet been documented in the wiki, so try an `EXPORT` operation on an existing system if supported, or consult the appropriate sample files)
+
+| Task | File format | Create | Update | Delete | Export | 
+| --- | --- | --- | --- | --- | --- |
+| [[Parameter]]                      | csv, xls | Y | Y | Y | Y
+| [[Unit]]                           | csv, xls | Y | Y | Y | Y
+| [[UnitGroup]]                      | csv, xls | Y | Y | Y | Y
+| [[MonitoringMethod]]               | csv, xls | Y | Y | Y | Y
+| [[LocationType]]                   | csv, xls | Y | Y | Y | Y
+| [[Location]]                       | csv, xls | Y | Y | N | Y
+| [[TimeSeries]]                     | csv, xls | Y | Y | N | Y
+| [[Grade]]                          | csv, xls | Y | Y | Y | Y
+| [[Qualifier]]                      | csv, xls | Y | Y | Y | Y
 | [[Role]]                           | csv      | Y | Y | Y |
 | [[FolderUserRole]]                 | csv      | Y | Y | Y |
 | [[LocationUserRole]]               | csv      | Y | Y | Y |
