@@ -63,15 +63,16 @@ Click on the **Task** column to get detailed information for a specific task.
 | [[TimeSeries]]                     | csv, xls | Y | Y | N | Y
 | [[Grade]]                          | csv, xls | Y | Y | Y | Y
 | [[Qualifier]]                      | csv, xls | Y | Y | Y | Y
-| [[Approval]]                       | csv, xls | Y | Y | Y | Y
+| [[ApprovalLevel]]                  | csv, xls | Y | Y | Y | Y
+| [[Tag]]                            | csv, xls | Y | Y | Y | Y
+| [[ExtendedAttribute]]              | csv, xls | Y | Y | Y | Y
+| [[GlobalSetting]]                  | csv, xls | Y | Y | Y | Y
 | [[Role]]                           | csv      | Y | Y | Y |
 | [[FolderUserRole]]                 | csv      | Y | Y | Y |
 | [[LocationUserRole]]               | csv      | Y | Y | Y |
 | [[PrimaryFolder]]                  | csv      | Y | Y | Y |
 | [[SecondaryFolder]]                | csv      | Y | N | N |
-| [[GlobalSetting]]                  | csv      | Y | Y | Y |
 | [[LocationNote]]                   | csv      | Y | Y | Y |
-| [[Tag]]                            | csv      | Y | Y | Y |
 | [[StandardDatum]]                  | csv      | Y | N | Y |
 | [[ReferencePoint]]                 | csv      | Y | Y | Y |
 | [[ReferencePointPeriod]]           | csv      | Y | Y | N |
