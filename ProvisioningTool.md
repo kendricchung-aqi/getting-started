@@ -67,10 +67,10 @@ Click on the **Task** column to get detailed information for a specific task.
 | [[Tag]]                            | csv, xls | Y | Y | Y | Y
 | [[ExtendedAttribute]]              | csv, xls | Y | Y | Y | Y
 | [[GlobalSetting]]                  | csv, xls | Y | Y | Y | Y
+| [[LocationFolder]]                 | csv, xls | Y | Y | Y | Y
 | [[Role]]                           | csv      | Y | Y | Y |
 | [[FolderUserRole]]                 | csv      | Y | Y | Y |
 | [[LocationUserRole]]               | csv      | Y | Y | Y |
-| [[LocationFolder]]                 | csv      | Y | Y | Y |
 | [[LocationNote]]                   | csv      | Y | Y | Y |
 | [[StandardDatum]]                  | csv      | Y | N | Y |
 | [[ReferencePoint]]                 | csv      | Y | Y | Y |
