@@ -70,8 +70,7 @@ Click on the **Task** column to get detailed information for a specific task.
 | [[Role]]                           | csv      | Y | Y | Y |
 | [[FolderUserRole]]                 | csv      | Y | Y | Y |
 | [[LocationUserRole]]               | csv      | Y | Y | Y |
-| [[PrimaryFolder]]                  | csv      | Y | Y | Y |
-| [[SecondaryFolder]]                | csv      | Y | N | N |
+| [[LocationFolder]]                 | csv      | Y | Y | Y |
 | [[LocationNote]]                   | csv      | Y | Y | Y |
 | [[StandardDatum]]                  | csv      | Y | N | Y |
 | [[ReferencePoint]]                 | csv      | Y | Y | Y |
@@ -134,10 +133,10 @@ Supported Data names:
     Role
     FolderUserRole
     UnitGroup
-    PrimaryFolder
+    LocationFolder
     SecondaryFolder
     LocationType
-    Approval
+    ApprovalLevel
     GlobalSetting
     PicklistDisplayItem
     LocationUserRole
@@ -150,6 +149,7 @@ Supported Data names:
     ReferencePoint
     ReferencePointPeriod
     Tag
+    ExtendedAttribute
     StandardDatum
     LocationStandardDatum
     LocalAssumedDatumPeriod
