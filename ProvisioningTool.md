@@ -68,6 +68,8 @@ Click on the **Task** column to get detailed information for a specific task.
 | [[ExtendedAttribute]]              | csv, xls | Y | Y | Y | Y
 | [[GlobalSetting]]                  | csv, xls | Y | Y | Y | Y
 | [[LocationFolder]]                 | csv, xls | Y | Y | Y | Y
+| [[ComputationType]]                | csv, xls | Y | Y | Y | Y
+| [[ComputationPeriod]]              | csv, xls | Y | Y | Y | Y
 | [[Role]]                           | csv      | Y | Y | Y |
 | [[FolderUserRole]]                 | csv      | Y | Y | Y |
 | [[LocationUserRole]]               | csv      | Y | Y | Y |
