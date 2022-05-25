@@ -83,6 +83,7 @@ Click on the **Task** column to get detailed information for a specific task.
 | [[MeasurementGrade]]               | csv      | N | Y | N |
 | [[PicklistDisplayItem]]            | csv      | Y | Y | Y |
 | [[Sensor]]                         | csv      | Y | Y | Y |
+| [[DerivedTimeSeries]]              | csv      | Y | Y | N | Y
 | [[RepairTimeSeries]]               | csv      | N | Y | N |
 | [[ExtendedAttributeSchema]]        | sql      | Y | Y | N |
 
@@ -158,5 +159,6 @@ Supported Data names:
     DatumReading
     Sensor
     RepairTimeSeries
+    DerivedTimeSeries
     Qualifier.
 ```
