@@ -84,8 +84,14 @@ When the `ComputationPeriodIdentifier` field is not explicitly set:
 | 1 | RowType | Must be `Passthrough`. |
 | 2 | StartingFrom | Optional [starting time](#timestamp-formats) of the processing period. |
 | 3 | Description | Optional description of the processing period. |
-| x | X | |
+| 4 | [InputTimeSeries](#inputtimeseries) | The input time-series |
+| 5 | Method | The optional method code. |
 
+### InputTimeSeries
+
+Input time-series can be specified with no location identifier, as `{ParameterId}.{Label}` (eg. `HG.Telemetry`). The location of the derived series will be assumed. This is the most succinct and most common form.
+
+Input time-series can also be specified with an explicit location identifier, , as `{ParameterId}.{Label}@{LocationIdentifier}` (eg. `HG.Telemetry@Loc2`). This form is required when one location's series needs to pull in data from a different location.
 ### `Calculation` rows
 
 | # | Field name | Description |
