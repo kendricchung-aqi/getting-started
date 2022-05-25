@@ -14,6 +14,11 @@ The CSV format for creating/updating derived series is similar to the CSV format
 
 9 row types are supported. The first field in each row defines the row type.
 
+- A [`DerivedSeries`](#derivedseries-rows) row creates the outer shell for a derived series.
+- All the other rows that follow define specific processing periods, beginning at a `StartingFrom` point in time.
+- Each processing period must have a `StartingFrom` timestamp later than all preceeding periods.
+- A derived series can have any number of processing periods defined.
+
 | Row type | Description |
 | --- | --- |
 | [`DerivedSeries`](#derivedseries-rows) | Defines a new derived series. |
@@ -71,7 +76,6 @@ When the `ComputationPeriodIdentifier` field is not explicitly set:
 | 1 | RowType | Must be `NoProcessing`. |
 | 2 | StartingFrom | Optional [starting time](#timestamp-formats) of the processing period. |
 | 3 | Description | Optional description of the processing period. |
-| x | X | |
 
 ### `Passthrough` rows
 
