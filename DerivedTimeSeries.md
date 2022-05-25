@@ -1,6 +1,6 @@
 # ProvisioningTool - `DerivedTimeSeries` tasks
 
-- CREATE and UPDATE operations are supported.
+- CREATE, UPDATE, and EXPORT operations are supported.
 - DELETE operations are not supported for time-series (neither basic, reflected, nor derived). But you can use the [LocationDeleter.exe tool](https://github.com/AquaticInformatics/examples/tree/master/TimeSeries/PublicApis/SdkExamples/LocationDeleter#deleting-time-series) for that.
 
 ## CSV file format
@@ -17,14 +17,14 @@ The CSV format for creating/updating derived series is similar to the CSV format
 | Row type | Description |
 | --- | --- |
 | [`DerivedSeries`](#derivedseries-rows) | Defines a new derived series. |
-| [`NoProcessing`](#noprocessing-rows) | Defines a period of NoProcessing processing. |
-| [`Passthrough`](#passthrough-rows) | Defines a period of Passthrough processing. |
-| [`Calculation`](#calculation-rows) | Defines a period of Calculation processing. |
-| [`RatingModel`](#ratingmodel-rows) | Defines a period of RatingModel processing. |
-| [`Statistical`](#statistical-rows) | Defines a period of Statistical processing. |
-| [`Transformation`](#transformation-rows) | Defines a period of Transformation processing. |
-| [`FillMissingData`](#fillmissingdata-rows) | Defines a period of FillMissingData processing. |
-| [`DatumConversion`](#datumconversion-rows) | Defines a period of DatumConversion processing. |
+| [`NoProcessing`](#noprocessing-rows) | Defines a period of no processing. |
+| [`Passthrough`](#passthrough-rows) | Defines a period of passing through the corrected signal from another series. |
+| [`Calculation`](#calculation-rows) | Defines a period of using a formula to calculate values from one or more series. |
+| [`RatingModel`](#ratingmodel-rows) | Defines a period of rating model derivation from one series through a rating model. |
+| [`Statistical`](#statistical-rows) | Defines a period of statistical processing from one series. |
+| [`Transformation`](#transformation-rows) | Defines a period of transformation processing. |
+| [`FillMissingData`](#fillmissingdata-rows) | Defines a period of filling data gaps in a source series with points from a secondary seris. |
+| [`DatumConversion`](#datumconversion-rows) | Defines a period of datum conversion on one series into a specific datum. |
 
 See [Timestamp Formats](#timestamp-formats) for the supported date/time formats
 
