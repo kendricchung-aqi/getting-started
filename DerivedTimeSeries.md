@@ -33,7 +33,36 @@ See [Timestamp Formats](#timestamp-formats) for the supported date/time formats
 | # | Field name | Description |
 | --- | --- | --- |
 | 1 | RowType | Must be `DerivedSeries`. |
-| 2 | Location | Location identifier to contain the rating model. |
+| 2 | ParameterId | Parameter ID of the series. This is the ID, not the DisplayName, so 'HG' and not "Stage'. |
+| 3 | UnitId | Optional unit Id of the series. |
+| 4 | Label | The label for the derived series. |
+| 5 | LocationIdentifier | The identifier of the location which owns the derived series. |
+| 6 | UtcOffset | Optional UTC offset, in +HH:MM or -HH:MM format. If blank, defaults to the location's UTC offset. |
+| 7 | Description | Optional description for the series. |
+| 8 | Comment | Optional comment for the series. |
+| 9 | Publish | Optional Publish flag, defaults to `false`. |
+| 10 | InterpolationType | Optional interpolation type. If set, must be one of: <br/> `InstantaneousValues` <br/> `PrecedingConstant` <br/> `PrecedingTotals` <br/> `InstantaneousTotals` <br/> `DiscreteValues` <br/> `SucceedingConstant` |
+| 11 | ComputationIdentifier | Optional computation type. If set, must be one of: <br/> `Min` <br/> `Max` <br/> `Sum` <br/> `Mean` <br/> `Median` <br/> `Selected Value` <br/> `Tidal High` <br/> `Tidal Lower High` <br/> `Tidal Higher Low` <br/> `Tidal Low` <br/> `Decumulated` <br/> `Max At Event Time` <br/> `Total Amount` <br/> |
+| 12 | ComputationPeriodIdentifier | Optional computation period. If set, must be one of: <br/> `Annual` <br/> `Monthly` <br/> `Weekly` <br/> `Daily` <br/> `Hourly` <br/> `Minutes` <br/> `Points` <br/> `WaterYear` <br/> |
+
+While there can be many fields in a `DerivedSeries` row, only the first 5 fields are required. The remaining 7 fields are optional and assume reasonable default values.
+
+When the `UnitId` field is not explicitly set:
+- Use the unit ID of the first input series of the first processing period.
+- If no processing is define, use the parameter's default unit ID.
+
+When the `InterpolationType` field is not explicitly set:
+- `PrecedingConstant` if the first processing plan is `Statistical`.
+- Else use the interpolation type of the first input time series of the first processing period.
+- If no processing is defined, the parameter's default interpolation type will be used.
+
+When the `ComputationIdentifier` field is not explicitly set:
+- If any statistical processing is configured, use first statistic's `StatisticType` field value
+- Else leave it blank.
+
+When the `ComputationPeriodIdentifier` field is not explicitly set:
+- If any statistical processing is configured, use first statistic's `Period` field value
+- Else leave it blank.
 
 ### `NoProcessing` rows
 
@@ -109,7 +138,7 @@ See [Timestamp Formats](#timestamp-formats) for the supported date/time formats
 
 ## Timestamp formats
 
-The `StartingFrom` date/times in the CSV can:
+The `StartingFrom` date/times in each processing period can:
 - Be completely blank, to indicate starting from the beginning of record.
 - Just specify the date in `yyyy-MM-dd` format
 - Include an optional time-of-day, in `HH:mm` or `HH:mm:ss` format (midnight is assumed if omitted)
