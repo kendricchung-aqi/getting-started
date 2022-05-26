@@ -38,7 +38,7 @@ See [Timestamp Formats](#timestamp-formats) for the supported date/time formats
 | # | Field name | Description |
 | --- | --- | --- |
 | 1 | RowType | Must be `DerivedSeries`. |
-| 2 | ParameterId | Parameter ID of the series. This is the ID, not the DisplayName, so 'HG' and not "Stage'. |
+| 2 | ParameterId | Parameter ID of the series. This is the ID, not the DisplayName, so 'HG' and not 'Stage' or 'Water Level'. |
 | 3 | UnitId | Optional unit Id of the series. |
 | 4 | Label | The label for the derived series. |
 | 5 | LocationIdentifier | The identifier of the location which owns the derived series. |
@@ -84,7 +84,7 @@ When the `ComputationPeriodIdentifier` field is not explicitly set:
 | 1 | RowType | Must be `Passthrough`. |
 | 2 | StartingFrom | Optional [starting time](#timestamp-formats) of the processing period. |
 | 3 | Description | Optional description of the processing period. |
-| 4 | [InputTimeSeries](#inputtimeseries) | The input time-series |
+| 4 | [InputTimeSeries](#inputtimeseries) | The input time-series. |
 | 5 | Method | The optional method code. |
 
 ### InputTimeSeries
@@ -92,6 +92,7 @@ When the `ComputationPeriodIdentifier` field is not explicitly set:
 Input time-series can be specified with no location identifier, as `{ParameterId}.{Label}` (eg. `HG.Telemetry`). The location of the derived series will be assumed. This is the most succinct and most common form.
 
 Input time-series can also be specified with an explicit location identifier, , as `{ParameterId}.{Label}@{LocationIdentifier}` (eg. `HG.Telemetry@Loc2`). This form is required when one location's series needs to pull in data from a different location.
+
 ### `Calculation` rows
 
 | # | Field name | Description |
@@ -99,7 +100,34 @@ Input time-series can also be specified with an explicit location identifier, , 
 | 1 | RowType | Must be `Calculation`. |
 | 2 | StartingFrom | Optional [starting time](#timestamp-formats) of the processing period. |
 | 3 | Description | Optional description of the processing period. |
-| x | X | |
+| 4 | Method | The optional method code. |
+| 5 | Formula | The formula for calculating `y` from the `x1` through `xN` input series. |
+| 6 | MasterInput | Must one of `x1` through `xN`. The timestamps from points in the master input will be used to interpolate values in all the secondary inputs. |
+| 7 | x1 | [InputTimeSeries 1](#timelaggedinputtimeseries) |
+| 8 | x2 | [InputTimeSeries 2](#timelaggedinputtimeseries) |
+| ... |  | |
+| 6+N | xN | [InputTimeSeries N](#timelaggedinputtimeseries) |
+
+- A calculation is a formula based on one or more time-series (up to 50 time-series).
+- One series is designated the master input, and the remaining series, if any are secondary series.
+- The timestamps from the master input will be used as the interpolation timestamps for any secondary series, using each series's interpolation type rules.
+- Any input time series can optionally be "time-lagged", moving all the points forwards or backwards in time by a specified amount.
+
+### TimeLaggedInputTimeSeries
+
+Each calculation input series can specified like a [InputTimeSeries](#inputtimeseries) using either `{ParameterId}.{Label}` or `{ParameterId}.{Label}@{Location}` syntax.
+
+If a time-lag is required, then a `+HH:MM:SS@` or `-HH:MM:SS@` prefix will preceed the input time series.
+
+- `HG.Telemetry` is an un-lagged stage telemetry signal.
+- `-00:15:00@HG.Telemetry@Loc2` is the telemetry signal from location 2, but each point occurring 15 minutes earlier than in the original signal.
+
+This small CSV would create `QR.Delta15@Loc1` and report the change in discharge over the last 15 minutes from the `QR.Working@Loc1` signal.
+
+```csv
+DerivedSeries, QR, m^3/s, Delta15, Loc1
+Calculation, , , , y = x2 - x1, x1, QR.Working, -00:15:00@QR.Working
+```
 
 ### `RatingModel` rows
 
@@ -108,7 +136,15 @@ Input time-series can also be specified with an explicit location identifier, , 
 | 1 | RowType | Must be `Model`. |
 | 2 | StartingFrom | Optional [starting time](#timestamp-formats) of the processing period. |
 | 3 | Description | Optional description of the processing period. |
-| x | X | |
+| 4 | [InputRatingModel](#inputratingmodel) | The input rating model. |
+| 5 | [InputTimeSeries](#inputtimeseries) | The input time-series, whose parameter must match the rating model's input parameter. |
+| 6 | Method | The optional method code. |
+
+### InputRatingModel
+
+Input rating models can be specified with no location identifier, as `{InputParameterId}-{OutputParameterId}.{Label}` (eg. `HG-QR.Derived`). The location of the derived series will be assumed. This is the most succinct and most common form.
+
+Input time-series can also be specified with an explicit location identifier, , as `{InputParameterId}-{OutputParameterId}.{Label}@{LocationIdentifier}` (eg. `HG-QR.Derived@Loc2`). This form is required if the rating model is owned by another location.
 
 ### `Statistical` rows
 
@@ -117,7 +153,10 @@ Input time-series can also be specified with an explicit location identifier, , 
 | 1 | RowType | Must be `Statistical`. |
 | 2 | StartingFrom | Optional [starting time](#timestamp-formats) of the processing period. |
 | 3 | Description | Optional description of the processing period. |
-| x | X | |
+| 4 | StatisticType | |
+| 5 | [InputTimeSeries](#inputtimeseries) | The input time-series. |
+| 6 | Method | The optional method code. |
+| 7 | RemoveNegativeValues | Optional boolean value, which defaults to `false`. |
 
 ### `Transformation` rows
 
@@ -126,7 +165,10 @@ Input time-series can also be specified with an explicit location identifier, , 
 | 1 | RowType | Must be `Transformation`. |
 | 2 | StartingFrom | Optional [starting time](#timestamp-formats) of the processing period. |
 | 3 | Description | Optional description of the processing period. |
-| x | X | |
+| 4 | StatisticType | Can only be `Decumulated`. |
+| 5 | [InputTimeSeries](#inputtimeseries) | The input time-series. |
+| 6 | Method | The optional method code. |
+| 7 | RemoveNegativeValues | Optional boolean value, which defaults to `false`. |
 
 ### `FillMissingData` rows
 
@@ -135,7 +177,11 @@ Input time-series can also be specified with an explicit location identifier, , 
 | 1 | RowType | Must be `FillMissingData`. |
 | 2 | StartingFrom | Optional [starting time](#timestamp-formats) of the processing period. |
 | 3 | Description | Optional description of the processing period. |
-| x | X | |
+| 4 | [SourceTimeSeries](#inputtimeseries) | The source time-series. |
+| 5 | [SecondaryTimeSeries](#inputtimeseries) | The secondary time-series to be used when gaps occur in the source. |
+| 6 | Method | The optional method code. |
+| 7 | OutputGapTolerance | Optional output gap tolerance, in +HH:MM or -HH:MM format. |
+| 8 | EndOfSignalWaitBeforeFillingData | Optional wait before data from the secondary series is used to fill gaps in the source, in +HH:MM or -HH:MM format. |
 
 ### `DatumConversion` rows
 
@@ -144,7 +190,10 @@ Input time-series can also be specified with an explicit location identifier, , 
 | 1 | RowType | Must be `DatumConversion`. |
 | 2 | StartingFrom | Optional [starting time](#timestamp-formats) of the processing period. |
 | 3 | Description | Optional description of the processing period. |
-| x | X | |
+| 4 | [InputTimeSeries](#inputtimeseries) | The input time-series. |
+| 5 | Source | The source datum or reference point. A blank or empty value will default to location's local assumed datum. |
+| 6 | TargetDatum | The target datum or reference point. A blank or empty value will default to location's local assumed datum. |
+| 7 | Method | The optional method code. |
 
 ## Timestamp formats
 
