@@ -31,8 +31,6 @@ The CSV format for creating/updating derived series is similar to the CSV format
 | [`FillMissingData`](#fillmissingdata-rows) | Defines a period of filling data gaps in a source series with points from a secondary seris. |
 | [`DatumConversion`](#datumconversion-rows) | Defines a period of datum conversion on one series into a specific datum. |
 
-See [Timestamp Formats](#timestamp-formats) for the supported date/time formats
-
 ### `DerivedSeries` rows
 
 | # | Field name | Description |
@@ -47,8 +45,8 @@ See [Timestamp Formats](#timestamp-formats) for the supported date/time formats
 | 8 | Comment | Optional comment for the series. |
 | 9 | Publish | Optional Publish flag, defaults to `false`. |
 | 10 | InterpolationType | Optional interpolation type. If set, must be one of: <br/> `InstantaneousValues` <br/> `PrecedingConstant` <br/> `PrecedingTotals` <br/> `InstantaneousTotals` <br/> `DiscreteValues` <br/> `SucceedingConstant` |
-| 11 | ComputationIdentifier | Optional computation type. If set, must be one of: <br/> `Min` <br/> `Max` <br/> `Sum` <br/> `Mean` <br/> `Median` <br/> `Selected Value` <br/> `Tidal High` <br/> `Tidal Lower High` <br/> `Tidal Higher Low` <br/> `Tidal Low` <br/> `Decumulated` <br/> `Max At Event Time` <br/> `Total Amount` <br/> |
-| 12 | ComputationPeriodIdentifier | Optional computation period. If set, must be one of: <br/> `Annual` <br/> `Monthly` <br/> `Weekly` <br/> `Daily` <br/> `Hourly` <br/> `Minutes` <br/> `Points` <br/> `WaterYear` <br/> |
+| 11 | ComputationIdentifier | Optional computation type. If set, must be one of: <br/> `Min` <br/> `Max` <br/> `Sum` <br/> `Mean` <br/> `Median` <br/> `Selected Value` <br/> `Tidal High` <br/> `Tidal Lower High` <br/> `Tidal Higher Low` <br/> `Tidal Low` <br/> `Decumulated` <br/> `Max At Event Time` <br/> `Total Amount` |
+| 12 | ComputationPeriodIdentifier | Optional computation period. If set, must be one of: <br/> `Annual` <br/> `Monthly` <br/> `Weekly` <br/> `Daily` <br/> `Hourly` <br/> `Minutes` <br/> `Points` <br/> `WaterYear` |
 
 While there can be many fields in a `DerivedSeries` row, only the first 5 fields are required. The remaining 7 fields are optional and assume reasonable default values.
 
@@ -153,10 +151,21 @@ Input time-series can also be specified with an explicit location identifier, , 
 | 1 | RowType | Must be `Statistical`. |
 | 2 | StartingFrom | Optional [starting time](#timestamp-formats) of the processing period. |
 | 3 | Description | Optional description of the processing period. |
-| 4 | StatisticType | |
+| 4 | StatisticType | Must be one of: <br/> `Minimum` <br/> `Maximum` <br/> `Sum` <br/> `Mean` <br/> `Median` <br/> `SelectedValue` <br/> `TidalHigh` <br/> `TidalLowHigh` <br/> `TidalHighLow` <br/> `TidalLow` <br/> `MaximumAtEventTime` <br/> `TimeIntegral` |
 | 5 | [InputTimeSeries](#inputtimeseries) | The input time-series. |
 | 6 | Method | The optional method code. |
-| 7 | RemoveNegativeValues | Optional boolean value, which defaults to `false`. |
+| 7 | Period | Must be one of: <br/> `Annual` <br/> `Monthly` <br/> `Weekly` <br/> `Daily` <br/> `Hourly` <br/> `Minutes` <br/> `Points` <br/> `WaterYear` |
+| 8 | PeriodValue | The number of periods over which the statistic will be aggregated. |
+| 9 | BinAnchorOffsetPeriod | Optional anchor point within the bin, in "MM-DD HH:MM" (month-day hour:minute) format. Defaults to `00-00 00:00`. |
+| 10 | PlacementOfComputedValueInBin | If set, must be one of `Start` or `End`. Defaults to `End`. |
+| 11 | MinimumCoveragePercentageForComputation | If set, should be an integer value between `1` and `100`.|
+| 12 | AutomaticGradeForForMinimumCoverageAndAbove | Optional numeric grade code used when minimum coverage rules are triggered. Defaults to `-1`. |
+| 13 | DailyTimeOffsetInMinutes | For `SelectedValue` statistics only, an optional integer offset, in minutes, for the start of the daily selected value. |
+
+Statistical calculations are one of the most useful derivation processing types. They are also the most complex processing option to configure.
+
+- The `Decumulated` statistic type is not supported by this row. Use the [`Transformation`](#transformation-rows) row instead.
+- For `SelectedValue` statistics, fields 8 through 12 are ignored.
 
 ### `Transformation` rows
 
