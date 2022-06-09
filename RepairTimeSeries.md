@@ -63,7 +63,7 @@ If any of the CSV rows violate one of these constraints, then that invalid is lo
 # Repairing a time-series is a special UPDATE task to change some normally-unchangeable properties of time-series, while retaining the rest of the existing points, corrections, and other metadata.
 # CREATE and DELETE tasks for RepairTimeSeries are not supported.
 #
-# Please use with caution and ONLY after verifying that your database and blob storage procedures are working.
+# Please use with caution and ONLY after verifying that your database and blob storage backup & restore procedures are working.
 #
 # An existing time-series can be identified by one of two methods:
 # 1) Just the TimeSeriesUniqueId column (1st column).
