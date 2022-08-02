@@ -18,6 +18,7 @@ The CSV format for creating/updating derived series is similar to the CSV format
 - All the other rows that follow define specific processing periods, beginning at a `StartingFrom` point in time.
 - Each processing period must have a `StartingFrom` timestamp later than all preceeding periods.
 - A derived series can have any number of processing periods defined.
+- Many of the fields are optional, and use reasonable default values if blank/omitted.
 
 | Row type | Description |
 | --- | --- |
@@ -30,6 +31,28 @@ The CSV format for creating/updating derived series is similar to the CSV format
 | [`Transformation`](#transformation-rows) | Defines a period of transformation processing. |
 | [`FillMissingData`](#fillmissingdata-rows) | Defines a period of filling data gaps in a source series with points from a secondary seris. |
 | [`DatumConversion`](#datumconversion-rows) | Defines a period of datum conversion on one series into a specific datum. |
+
+### This isn't a normal CSV file. Each row depends on the previous row
+
+Just like the [[RatingModelExchange]] CSV file format, the DerivedSeries CSV format is not really a true table format. So in this sense it isn't a CSV file. It is more accurate to to say the file format is just a line-oriented text file, since each line is not the same same shape as the next.
+
+Instead, each line depends on the *context* that precedes it.
+
+Your CSV file will contain at least one [DerivedSeries](#derivedseries-rows) row, followed by zero or more processing rows for that derived series, until the next `DerivedSeries` row is encountered. We call this sequence of one `DerivedSeries` row plusits following processing rows a "processing plan".
+
+The CSV file can contain any number of processing plans for any number of derived series.
+
+```
+# Create an hourly mean Stage series from telemetry
+DerivedSeries, HG, m, HourlyMean, Loc12, , , , , , Mean, Hourly
+Statistical, , , Mean, HG.Telemetry, , Hourly, 1
+
+# Create a discharge series, starting with a historical discharge imported from another system
+# and switching over to a rating model derivation from Oct 2021, when the AQTS system was created
+DerivedSeries, QR, m^3/s, Derived, Loc12
+Passthrough, , From Ted's Excel sheets, QR.Historical
+RatingModel, 2021-10-01, , HG-QR.Rating, HG.Telemetry
+```
 
 ### `DerivedSeries` rows
 
