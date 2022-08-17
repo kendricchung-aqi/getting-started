@@ -138,7 +138,7 @@ Input time-series can also be specified with an explicit location identifier, , 
 
 Each calculation input series can specified like a [InputTimeSeries](#inputtimeseries) using either `{ParameterId}.{Label}` or `{ParameterId}.{Label}@{Location}` syntax.
 
-If a time-lag is required, then a `+HH:MM:SS@` or `-HH:MM:SS@` prefix will preceed the input time series.
+If a time-lag is required, then a `+HH:MM:SS@` or `-HH:MM:SS@` prefix will preceed the input time series. If the time-lag exceeds a day, then a `+d.HH:MM:SS@` or `-d.HH:MM:SS@` prefix will be used.
 
 - `HG.Telemetry` is an un-lagged stage telemetry signal.
 - `-00:15:00@HG.Telemetry@Loc2` is the telemetry signal from location 2, but each point occurring 15 minutes earlier than in the original signal.
