@@ -1,6 +1,6 @@
 # ProvisioningTool - `TimeSeries` tasks
 
-- CREATE and UPDATE operations are supported.
+- EXPORT, CREATE, and UPDATE operations are supported.
 - DELETE operations are not supported for time-series. But you can use the [LocationDeleter.exe tool](https://github.com/AquaticInformatics/examples/tree/master/TimeSeries/PublicApis/SdkExamples/LocationDeleter#locationdeleter) for that.
 
 ## Format of the `CreateTimeSeries.csv` file
