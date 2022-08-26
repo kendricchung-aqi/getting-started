@@ -1,6 +1,6 @@
 # ProvisioningTool - `DerivedSeries` tasks
 
-- CREATE, UPDATE, and EXPORT operations are supported.
+- EXPORT, CREATE, and UPDATE operations are supported.
 - DELETE operations are not supported for time-series (neither basic, reflected, nor derived). But you can use the [LocationDeleter.exe tool](https://github.com/AquaticInformatics/examples/tree/master/TimeSeries/PublicApis/SdkExamples/LocationDeleter#deleting-time-series) for that.
 
 ## CSV file format
