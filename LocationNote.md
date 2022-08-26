@@ -14,15 +14,19 @@
 | TimeSeries | `Stage.Telemetry@Loc1` | An optional time-series identifier for the note can be specified in any of three formats:<br/><br/>- `{Parameter}.{Label}` (eg. `Stage.Telemetry`)<br/>- `{Parameter}.{Label}@{Location}` (eg. `Stage.Telemetry@Loc1`)<br/>- `{TimeSeriesUniqueId}` (eg. `b2c1b04f9e0547e7a23f9709137ddc7d) |
 | Tag:*{key}* |  | Column headers beginning with "Tag:" followed by the key of the tag can be used to assign a tag value to a location note. The tag must be configured with AppliesToLocationNotes = true in order to set a value for the location note. |
 
-## Format of the `UpdateLocationNotes.csv` file
+## UPDATE operations
 
-The same CSV file format for the `-Task="CREATE LocationNote CreateLocationNotes.csv"` task can also be used for the `-Task="UPDATE LocationNote UpdateLocationNotes.csv"` task. But the CSV shape of an UPDATE task can be much thinner, only needing to supply one column to select a location, plus one column for each property to update.
+The same CSV file format for the `-Task="CREATE LocationNote CreateLocationNotes.csv"` task can also be used for the `-Task="UPDATE LocationNote UpdateLocationNotes.csv"` task. But the CSV shape of an UPDATE task can be thinner, with only the columns required to identify the note and the properties which are changing. Properties not included in the CSV column header will not be updated.
 
-The UPDATE LOCATION task needs a CSV with at least a LocationIdentifier or UniqueId column, plus any other columns of the location to be updated. Any columns not included in the CSV will not be modified.
+The best way to identify a location note is through its `UniqueId` property, available from the `GET AQUARIUS/Publish/v2/GetLocationData` API response, or by running the EXPORT operation.
 
-Notes:
-- You cannot update the `UtcOffset` column of an existing location. When the `-Task='UPDATE Location pathToCsv'` task is used, the `UtcOffset` column will be ignored if it exists in the CSV file.
-- When all the column values match the current location's property values, no change will be made to the location. A location will only be modified when at least one property value is changed.
+If no `UniqueId` value exists (or of no `Unique` column header exists for the whole file), but a note has a `StartTime` and `EndTime`, then the note can be identified through the combination of the `LocationIdentifier`, `StartTime`, and the `EndTime` columns.
+
+Notes with no start time or no end time can only be identified using the `UniqueId` column.
+
+## DELETE operations
+
+Only the `UniqueId` column is used, so it must be present. All other columns will be ignored.
 
 ## Format of location note tag columns
 
