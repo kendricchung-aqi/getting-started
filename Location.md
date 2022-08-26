@@ -60,6 +60,18 @@ The `None` tag type is treated as a slightly special case. These tags don't have
 - **Disabled** for any of these seven "False-ish" value: blank/empty, `False`, `F`, `No`, `N`, `Off`, or `0` (case-insensitive).
 - **Enabled** for any other value.
 
+### `Picklist` tag type values
+
+Picklists allow a value to be selected from a configured list. Both tags and extended attributes can be `Picklist` types, but tags can have more than one active value from the list, whereas extended attributes can only have one value, or no value at all.
+
+Consider a picklist called `BestBeetle`, with the values `John`, `Paul`, `George`, and `Ringo`.
+
+When a picklist tag has more than one value, the values are stored in the CSV in a comma separated list and the entire list of values must be contained in double quotes.
+
+A location tag `Tag:BestBeetle` might have a value of `"John,Paul"` but an extended attribute `Ext:BestBeetle` could only choose one value.
+
+(And in a sane universe, that value **should** only ever be `Ringo`, but that is a debate for another day.)
+
 ## Example CSV with extended attributes and tags
 
 Here is an example CSV, with a header row and two location rows:
