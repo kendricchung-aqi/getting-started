@@ -70,10 +70,10 @@ Click on the **Task** column to get detailed information for a specific task.
 | [[LocationFolder]]                 | csv, xls | Y | Y | Y | Y
 | [[ComputationType]]                | csv, xls | Y | Y | Y | Y
 | [[ComputationPeriod]]              | csv, xls | Y | Y | Y | Y
+| [[LocationNote]]                   | csv, xls | Y | Y | Y | Y
 | [[Role]]                           | csv      | Y | Y | Y |
 | [[FolderUserRole]]                 | csv      | Y | Y | Y |
 | [[LocationUserRole]]               | csv      | Y | Y | Y |
-| [[LocationNote]]                   | csv      | Y | Y | Y |
 | [[StandardDatum]]                  | csv      | Y | N | Y |
 | [[ReferencePoint]]                 | csv      | Y | Y | Y |
 | [[ReferencePointPeriod]]           | csv      | Y | Y | N |
