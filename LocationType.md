@@ -1,6 +1,6 @@
 # ProvisioningTool - `LocationType` tasks
 
-- CREATE, UPDATE, and DELETE operations are supported.
+- EXPORT, CREATE, UPDATE, and DELETE operations are supported.
 
 ## Format of the `CreateLocationTypes.csv` file
 
