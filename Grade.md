@@ -4,3 +4,5 @@ Please refer to the relevant sample files included in the `ProvisioningTool.zip\
 - `SampleFiles\SampleGrades.csv`
 - `SampleFiles\SampleGrades.xlsx`
 - `SampleFiles\SampleUpdateGrades.csv`
+
+Alternatively, since the EXPORT operation is supported, you can run a `-Task="EXPORT Grade all.grades.csv"` operation to export all the current grade definitions from your working AQTS app server, and use the generated CSV as a starting point for other CREATE, UPDATE, or DELETE operations.
