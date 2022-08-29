@@ -46,11 +46,19 @@ With the `mytasks.txt` file as the following 6 lines:
 -task=Update parameter ../../MyUpdatedParameters.csv
 ```
 
+## Perform a sequence of tasks, in order
+
+The ProvisioningTool can perform more that one `-Task=` operation without intervention, by specifying more than one `-Task=` command line option (or as separate lines in an [`@options.txt` file](#use-the-optionstxt-syntax-to-simplify-repetitive-tasks).
+
+The tasks will be performed in the order in which they appear on the command line.
+
 # Supported Provisioning Operations
 
 Click on the **Task** column to get detailed information for a specific task.
 
-(Any task listed in red has not yet been documented in the wiki, so try an `EXPORT` operation on an existing system if supported, or consult the appropriate sample files)
+### Export 'em if you got 'em!
+
+The tasks listed at the top of the table support an `EXPORT` operation. Often just exporting the existing items from an AQTS system is the best way to discover how your data will be represented in CSV form. And most tasks include at least one sample file in the `ProvisioningTool.zip\SamplesFiles\*` folder to server as an example starting point.
 
 | Task | File format | Create | Update | Delete | Export | 
 | --- | --- | --- | --- | --- | --- |
@@ -71,6 +79,7 @@ Click on the **Task** column to get detailed information for a specific task.
 | [[ComputationType]]                | csv, xls | Y | Y | Y | Y
 | [[ComputationPeriod]]              | csv, xls | Y | Y | Y | Y
 | [[LocationNote]]                   | csv, xls | Y | Y | Y | Y
+| [[DerivedSeries]]                  | csv      | Y | Y | N | Y
 | [[Role]]                           | csv      | Y | Y | Y |
 | [[FolderUserRole]]                 | csv      | Y | Y | Y |
 | [[LocationUserRole]]               | csv      | Y | Y | Y |
@@ -83,7 +92,6 @@ Click on the **Task** column to get detailed information for a specific task.
 | [[MeasurementGrade]]               | csv      | N | Y | N |
 | [[PicklistDisplayItem]]            | csv      | Y | Y | Y |
 | [[Sensor]]                         | csv      | Y | Y | Y |
-| [[DerivedSeries]]                  | csv      | Y | Y | N | Y
 | [[RepairTimeSeries]]               | csv      | N | Y | N |
 | [[ExtendedAttributeSchema]]        | sql      | Y | Y | N |
 
