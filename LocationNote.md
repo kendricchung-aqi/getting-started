@@ -33,10 +33,3 @@ Only the `UniqueId` column is used, so it must be present. All other columns wil
 The ProvisioningTool supports the setting of any configured tag with `AppliesToLocationNotes` applicability. These tag values are identified by column names beginning with the `Tag:` prefix. The appropriate tag key name follows the colon.
 
 The same [`Tag:xxx` format and rules used by the Location task](https://github.com/AquaticInformatics/getting-started/wiki/Location#format-of-location-tag-columns-and-location-extended-attribute-columns) is used to specify location note tags.
-
-Also assume these two Location tags have been configured (with `AppliesToLocations` applicability):
-
-| CSV column header | Tag Key | Tag Type | Example value |
-|---|---|---|---|
-| `Tag:Watershed` | `Watershed` | `PickList`| `Fraser basin` |
-| `Tag:Has Telemetry` | `Has Telemetry` | `None` | _any "Falsey" value_ - The tag will be removed.<br/>_any other value_ - The tag will be set.<br/><br/>See [the `None` type notes for details](https://github.com/AquaticInformatics/getting-started/wiki/Location#none-tag-type-boolean-values). |
