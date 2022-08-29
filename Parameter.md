@@ -3,3 +3,5 @@ The ProvisioningTool **Parameter** task has not yet been fully documented here o
 Please refer to the relevant sample files included in the `ProvisioningTool.zip\SampleFiles\*` folder for example content:
 - `SampleFiles\SampleParameters.csv`
 - `SampleFiles\SampleParameters.xlsx`
+
+Alternatively, since the EXPORT operation is supported, you can run a `-Task="EXPORT Parameter all.parameters.csv"` operation to export all the current parameters from your working AQTS app server, and use the generated CSV as a starting point for other CREATE, UPDATE, or DELETE operations.
