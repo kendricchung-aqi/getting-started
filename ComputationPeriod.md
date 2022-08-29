@@ -2,3 +2,5 @@ The ProvisioningTool **ComputationPeriod** task has not yet been fully documente
 
 Please refer to the relevant sample files included in the `ProvisioningTool.zip\SampleFiles\*` folder for example content:
 - `SampleFiles\SampleComputationPeriods.csv`
+
+Alternatively, since the EXPORT operation is supported, you can run a `-Task="EXPORT ComputationPeriod all.computationperiods.csv"` operation to export all the current computation period definitions from your working AQTS app server, and use the generated CSV as a starting point for other CREATE, UPDATE, or DELETE operations.
