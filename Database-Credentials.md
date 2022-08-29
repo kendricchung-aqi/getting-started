@@ -11,6 +11,10 @@ But some tasks also need direct access to the AQTS database, in order to make th
 - [[RepairTimeSeries]]
 - [[PanelCount]]
 
+## AQCloud customers cannot run tasks requiring direct database access
+
+Customers running an AQUARIUS application server hosted at aquaticinformatics.dev will not be able to run any of the ProvisioningTool tasks which require direct database access. Please raise a ticket in our Support portal to have the Aquatic Informatics Support or Professional Services teams run these tasks on your behalf.
+
 ## Run the ProvisioningTool directly on the AQTS application server for simplicity
 
 When you run the ProvisioningTool directly on the AQTS app server, any task which requires direct DB access can automatically figure out the correct database connection settings, and you won't be required to specify any extra command line options.
