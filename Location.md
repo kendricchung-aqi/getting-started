@@ -30,7 +30,8 @@ The same CSV file format for the `-Task="CREATE Location CreateLocations.csv"` t
 The UPDATE LOCATION task needs a CSV with at least a LocationIdentifier or UniqueId column, plus any other columns of the location to be updated. Any columns not included in the CSV will not be modified.
 
 Notes:
-- You cannot update the `UtcOffset` column of an existing location. When the `-Task='UPDATE Location pathToCsv'` task is used, the `UtcOffset` column will be ignored if it exists in the CSV file.
+- For AQTS `2025.1` and later, you can use `ProvisioningTool V3.0.434+` to update `UTCOffset` of a location.
+- For AQTS earlier than `2025.1`, you cannot update the `UtcOffset` column of an existing location. When the `-Task='UPDATE Location pathToCsv'` task is used, the `UtcOffset` column will be ignored if it exists in the CSV file.
 - When all the column values match the current location's property values, no change will be made to the location. A location will only be modified when at least one property value is changed.
 
 ## Format of location tag columns and location extended attribute columns
