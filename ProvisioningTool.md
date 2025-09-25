@@ -39,6 +39,7 @@ With the `mytasks.txt` file as the following 6 lines:
 
 ```sh
 # Set the credentials here
+# Use a full URL if it's https. Example: https://myOrg.Aquaticinformatics.net.
 -Server=myserver
 
 # Perform all these tasks, in this order
@@ -120,7 +121,7 @@ Supported -option=value settings (/option=value works too):
 
   ==================== Task options
   -Task                The setup task to perform. Use quotation marks. E.g., Task="create grade c:\Input\grades.csv"
-  -SkipConfirmation    Set to true to confirm tasks to be performed. [default: False]
+  -SkipConfirmation    Set to true to skip the confirmation when the task starts. [default: False]
   -AllowOverwrite      When true, an Export operation can overwrite an existing file. [default: False]
 
 Use the @optionsFile syntax to read more options from a file.
@@ -145,7 +146,6 @@ Supported Data names:
     FolderUserRole
     UnitGroup
     LocationFolder
-    SecondaryFolder
     LocationType
     ApprovalLevel
     GlobalSetting
@@ -153,6 +153,8 @@ Supported Data names:
     LocationUserRole
     MonitoringMethod
     LocationNote
+    TimeSeriesNote
+    TimeSeriesMethod
     ExtendedAttributeSchema
     QualitativeUncertainty
     MeasurementGrade
@@ -167,6 +169,8 @@ Supported Data names:
     DatumReading
     Sensor
     RepairTimeSeries
+    Qualifier
+    ComputationType
+    ComputationPeriod
     DerivedSeries
-    Qualifier.
 ```
