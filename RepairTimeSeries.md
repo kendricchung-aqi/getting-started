@@ -1,6 +1,17 @@
-# ProvisioningTool - `RepairTimeSeries` tasks
+# ProvisioningTool - `RepairTimeSeries` task
 
-- Only the UPDATE operation is supported for this task.
+### Read this before you start:
+
+- Read the "WARNING" and "Intended use cases" sections below and decide if this task is safe and right for solving your problems.
+- `RepairTimeSeries` will make changes even if the time series is locked.
+- You won't see any snapshots, audit history of the changes made by this task.
+- Changing the default grade, interpolation type will affect the existing data immediately. Any non-default grades on the data points will remain, but the default grades will be changed to the new one that you just specified. 
+- If you have have generated reports, you may want to regenerate them after running this task.
+
+### Quick start 
+
+- Prepare a csv file. See below or comments in the sample file for instructions.
+- Run this command: `ProvisioningTool.exe /Server=<My_AQTS_Server_Url_Or_Host> /UserName=<MyUser> /Password=<MyPassword> /task="Update RepairTimeSeries Path\to\my_repair_ts.csv"`
 
 ### Database credentials are required for time-series repair
 
@@ -10,7 +21,7 @@ See the [[Database Credentials]] topic for more details.
 
 The simplest thing to do is run ProvisioningTool directly on the AQTS app server, to allow automatic discovery of the correct database configuration settings.
 
-# The `RepairTimeSeries` operation is a bit dangerous. Proceed with caution!
+# WARNING: The `RepairTimeSeries` operation is a bit dangerous. Proceed with caution!
 
 The `RepairTimeSeries` operation allows some normally-locked properties of basic or reflected time-series to be changed.
 
@@ -18,7 +29,7 @@ This operation can be useful in the early stages of building a system, so that y
 
 But if you are regularly running the `RepairTimeSeries` operation as part of your organization's production workflow, then you're using it incorrectly and have bigger issues to solve.
 
-# Intended use-cases for the `RepairTimeSeries` operation
+# Intended use cases for the `RepairTimeSeries` operation
 
 - Use a simple CSV file to describe which properties of a series should be changed.
 - Change from one parameter to another
@@ -40,7 +51,7 @@ The `RepairTimeSeries` operation enforces/validates quite a few preconditions, t
 - You can't change parameters if the series has any parameter-specific method codes.
 - You can't change interpolation to InstantaneousTotals (Type 6) or DiscreteValues (Type 7) if the series has any non MaxGap tolerances set.
 
-If any of the CSV rows violate one of these constraints, then that invalid is logged and skipped.
+If any of the CSV rows violate one of these constraints, then they will be marked as invalid and skipped. Invalid rows will be saved to a csv file when the task is completed.
 
 ## CSV columns
 
