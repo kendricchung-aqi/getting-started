@@ -5,8 +5,8 @@
 - Read the "WARNING" and "Intended use cases" sections below and decide if this task is safe and right for solving your problems.
 - `RepairTimeSeries` will make changes even if the time series is locked.
 - You won't see any snapshots, audit history of the changes made by this task.
-- Changing the default grade, interpolation type will affect the existing data immediately. Any non-default grades on the data points will remain, but the default grades will be changed to the new one that you just specified. 
-- If you have have generated reports, you may want to regenerate them after running this task.
+- Changing the default grade, interpolation type will affect the existing data immediately. Any non-default grades on the data points will remain, but the default grades will be changed to the one that you just specified. 
+- If you have generated reports, you may want to regenerate them after running this task.
 
 ### Quick start 
 
