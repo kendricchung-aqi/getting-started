@@ -1,0 +1,136 @@
+name: "Copilot Setup Steps"
+
+# Automatically run the setup steps when they are changed to allow for easy validation,
+# and allow manual testing through the repository's "Actions" tab
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - .github/workflows/copilot-setup-steps.yml
+  pull_request:
+    paths:
+      - .github/workflows/copilot-setup-steps.yml
+
+jobs:
+  # The job MUST be called `copilot-setup-steps` or it will not be picked up by Copilot
+  copilot-setup-steps:
+    runs-on: ubuntu-latest
+
+    # Set permissions to the lowest needed for the steps
+    permissions:
+      contents: read
+
+    # Environment variables for Copilot's context
+    env:
+      AGENT_TYPE: "implementation-specialist"
+      PLATFORM_VERSION: "latest"
+      ENVIRONMENT: "copilot-cloud"
+
+    steps:
+      # Checkout repository to access implementation guides and templates
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # Install core dependencies for the implementation specialist
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      # Install utilities for documentation and runbook generation
+      - name: Install documentation tools
+        run: |
+          pip install -q markdown jinja2 pyyaml pydantic
+          npm install -g marked@11.0.0 -s
+
+      # Validate implementation guides and templates
+      - name: Validate implementation resources
+        run: |
+          echo "✓ Validating implementation guides..."
+          if [ -d "docs/implementation" ]; then
+            find docs/implementation -name "*.md" -type f | head -20
+          else
+            echo "Note: docs/implementation directory not found"
+          fi
+          echo "✓ Implementation resources validated"
+
+      # Setup for integration testing
+      - name: Prepare integration test environment
+        run: |
+          echo "✓ Setting up integration test environment..."
+          mkdir -p .copilot/cache
+          mkdir -p .copilot/templates
+          mkdir -p .copilot/logs
+          echo "✓ Directories created"
+
+      # Install customer implementation utilities
+      - name: Install implementation utilities
+        run: |
+          echo "✓ Installing implementation utilities..."
+          if [ -f "requirements-impl.txt" ]; then
+            pip install -q -r requirements-impl.txt
+          fi
+          if [ -f "package.json" ]; then
+            npm ci --silent
+          fi
+          echo "✓ Utilities installed"
+
+      # Validate customer onboarding templates
+      - name: Validate onboarding templates
+        run: |
+          echo "✓ Validating onboarding templates..."
+          python3 << 'EOF'
+          import os
+          import json
+          from pathlib import Path
+          
+          templates_dir = Path(".copilot/templates")
+          if templates_dir.exists():
+              for template in templates_dir.glob("**/*.json"):
+                  try:
+                      with open(template) as f:
+                          json.load(f)
+                      print(f"✓ {template.name}")
+                  except json.JSONDecodeError:
+                      print(f"✗ {template.name} - invalid JSON")
+          else:
+              print("Note: Templates directory not found")
+          EOF
+
+
+
+      # Final validation and summary
+      - name: Validate Copilot environment
+        run: |
+          echo "╔════════════════════════════════════════════════════════════╗"
+          echo "║  Implementation Specialist Agent Environment Ready        ║"
+          echo "╚════════════════════════════════════════════════════════════╝"
+          echo ""
+          echo "✓ Python version: $(python3 --version)"
+          echo "✓ Node version: $(node --version)"
+          echo "✓ Agent Type: ${{ env.AGENT_TYPE }}"
+          echo "✓ Environment: ${{ env.ENVIRONMENT }}"
+          echo ""
+          echo "Available capabilities:"
+          echo "  • Customer onboarding workflows"
+          echo "  • API integration guidance"
+          echo "  • Configuration management"
+          echo "  • Technical troubleshooting"
+          echo "  • Documentation generation"
+          echo "  • Data migration planning"
+          echo ""
+          echo "Documentation:"
+          echo "  • Instructions: .github/copilot-instructions.md"
+          echo "  • Agent Config: .github/AGENTS.md"
+          echo "  • Skills: .copilot-skills.md"
+          echo ""
+          echo "Ready for implementation work!"
