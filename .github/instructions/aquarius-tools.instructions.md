@@ -9,7 +9,7 @@ applyTo: "**", "tools/*"
 - TimeSeriesExporter.exe (EXIM Exporter)
 - TimeSeriesImporter.exe (EXIM Importer)
 - LocationDeleter
-- AQUARIUS.Connect.Provisioning.Utility
+- AQUARIUS.Connect.Provisioning.Utility (`README` and examples are located in the `Examples` folder)
 
 *Ensure all of these tools are available and accessible before starting the onboarding process.*
 
@@ -175,13 +175,299 @@ Always resolve log errors before proceeding with the next location or phase.
 - The historical migration (via EXIM) must be complete and validated before Connect goes live
 - The **delta migration** fills the gap between the end of historical data and the start of Connect ingestion
 
+### Provisioning Connect with the Provisioning Utility
+
+Use `AQUARIUSConnectProvisioningUtility.exe` (located in `tools/AQUARIUS.Connect.Provisioning.Utility/`) to bulk-configure Connect from a JSON file. Example files and a README are in the `Examples/` subfolder.
+
+#### Basic command
+
+```cmd
+AQUARIUSConnectProvisioningUtility.exe ^
+  --json=MyConfig.json ^
+  --hostname=my.connect.url ^
+  --port=80 ^
+  --username=myconnectuser ^
+  --password=myconnectpassword ^
+  --log=ConnectProvisioning.log
+```
+
+> **Warning — `--restore` flag:** Adding `--restore` resets the target Connect system to its initial state **before** applying the JSON. This **deletes all locations, connectors, and schedules**. Omit `--restore` to add/update entities without deleting existing ones.
+
+#### JSON structure
+
+The provisioning JSON has these top-level sections:
+
+| Section | Purpose |
+|---------|---------|
+| `locations` | Connect locations (monitoring sites) |
+| `connectors` | Data ingest connectors linked to one or more locations |
+| `schedules` | Named schedules that trigger connectors |
+| `extractionRuleProfiles` | Reusable extraction driver configurations |
+| `inboundConnectionRuleProfiles` | Reusable inbound connection configurations |
+| `exportRuleProfiles` | Reusable AQTS export configurations |
+| `outboundConnectionRuleProfiles` | Reusable outbound connection configurations |
+
+#### Locations
+
+```json
+"locations": [
+    {
+        "identifier": "TASBRIDGE",
+        "name": "Tasman Bridge",
+        "utcOffset": "10:00:00"
+    }
+]
+```
+
+The `identifier` should match the location identifier in AQUARIUS Time-Series.
+
+#### Connectors
+
+Each connector specifies:
+- `location` — links the connector to a site (or omit and set `location` per data set for multi-site connectors)
+- `extractionRule` — how to parse incoming data (driver + rule profile + optional overrides)
+- `inboundConnectionRule` — where to pull data from (FTP, file system, database, HTTP, etc.)
+- `dataSets` — individual time series being ingested, each with one or more `exportTargets`
+- `schedules` — named schedules that trigger the connector (omit for manual-only)
+
+**Single-location connector — FTP + XML (no schedule, manual only):**
+
+```json
+{
+    "name": "Alpha Connector",
+    "location": "ALPHA",
+    "extractionRule": {
+        "driver": "XML File Extraction Driver",
+        "ruleProfile": "Default",
+        "settingOverrides": {
+            "XsltPath": "\\\\NAS\\Config\\DataSchema.xslt",
+            "Source UTC Offset": "00:00:00"
+        }
+    },
+    "inboundConnectionRule": {
+        "driver": "FTP Inbound Connection Driver",
+        "ruleProfile": "Default",
+        "settingOverrides": {
+            "FTP server": "ftp.alpha.com",
+            "User name": "employee1",
+            "Password": "beta",
+            "Enable SSL": true,
+            "Paths": ["/Data/Alpha1.xml", "/Data/Alpha2.xml"]
+        }
+    },
+    "dataSets": [
+        {
+            "identifier": "Precip Increm.Primary",
+            "name": "Rainfall (Primary)",
+            "exportTargets": [
+                {
+                    "exportRule": {
+                        "driver": "AQUARIUS Time-Series Export Driver",
+                        "ruleProfile": "Default",
+                        "settingOverrides": {
+                            "AQUARIUS Time-Series username": "aquser",
+                            "AQUARIUS Time-Series password": "password",
+                            "Location identifier": "SiteOne"
+                        }
+                    },
+                    "outboundConnectionRule": {
+                        "driver": "HTTP Outbound Connection Driver",
+                        "ruleProfile": "Default",
+                        "settingOverrides": {
+                            "Address": "https://aquarius.alpha.com/"
+                        }
+                    }
+                }
+            ]
+        }
+    ]
+}
+```
+
+**Multi-location connector — database, per-dataset location (runs hourly):**
+
+```json
+{
+    "name": "Meteorology Database",
+    "schedules": ["Hourly"],
+    "extractionRule": {
+        "driver": "Database Extraction Driver",
+        "ruleProfile": "Meteorology Time-Series Data"
+    },
+    "inboundConnectionRule": {
+        "driver": "Database Inbound Connection Driver",
+        "ruleProfile": "Meteorology DB Server 1"
+    },
+    "dataSets": [
+        {
+            "identifier": "TASBRIDGE_PRECIP",
+            "location": "TASBRIDGE",
+            "name": "Precipitation",
+            "exportTargets": [
+                {
+                    "exportRule": {
+                        "driver": "AQUARIUS Time-Series Export Driver",
+                        "ruleProfile": "AQTS Acquisition",
+                        "settingOverrides": {
+                            "Parameter identifier": "Precip Increm",
+                            "Time-series label": "Primary"
+                        }
+                    },
+                    "outboundConnectionRule": {
+                        "driver": "HTTP Outbound Connection Driver",
+                        "ruleProfile": "AQTS Server 1"
+                    }
+                }
+            ]
+        }
+    ]
+}
+```
+
+#### Data set identifiers
+
+For the **AQUARIUS Time-Series Export Driver**, the data set `identifier` is parsed as `<ParameterId>.<Label>` (e.g., `Precip Increm.Primary` → parameter `Precip Increm`, label `Primary`). Use `Parameter identifier` and `Time-series label` in `settingOverrides` when the identifier format does not follow this convention.
+
+If `Location identifier` is omitted from the export target, it defaults to the connector's `location`.
+
+#### Schedules
+
+```json
+"schedules": [
+    {
+        "name": "Real-time",
+        "triggers": [{"type": "Daily", "utcOffset": "10:00:00", "stepTimeOfDay": "00:01:00"}]
+    },
+    {
+        "name": "Hourly",
+        "triggers": [{"type": "Daily", "utcOffset": "10:00:00", "stepTimeOfDay": "01:00:00"}]
+    }
+]
+```
+
+`stepTimeOfDay` is the repeat interval: `00:01:00` = every 1 minute, `01:00:00` = every hour.
+
+#### Rule profiles
+
+Rule profiles are reusable named driver configurations. They have `driver`, `name`, `settings`, and optionally `ruleCanOverride` (which settings connectors are allowed to override via `settingOverrides`).
+
+**Text file extraction (CSV with regex):**
+
+```json
+{
+    "driver": "Text File Extraction Driver",
+    "name": "CSV Format",
+    "settings": {
+        "Text parsing expression": "^\\s*(?<Year>\\d{4})-(?<Month>\\d{2})-(?<Day>\\d{2})\\s+(?<Time>\\d{2}:\\d{2}:\\d{2})(\\s*,\\s*(?<Value>[\\d.+-]+)){$SensorP1}"
+    }
+}
+```
+
+`$SensorP1` is replaced at runtime by the data set identifier. Named groups `Year`, `Month`, `Day`, `Time`, `Value` are reserved by the Text File Extraction Driver.
+
+**Database extraction (SQL):**
+
+```json
+{
+    "driver": "Database Extraction Driver",
+    "name": "Meteorology Time-Series Data",
+    "settings": {
+        "SQL Query": "SELECT \"Timestamp\", \"Value\" FROM \"TimeSeriesValue\" WHERE \"Identifier\" = '$DataSetId' AND \"Timestamp\" >= '$StartPoint(\"yyyy-MM-dd HH:mm:ss\")'",
+        "Time stamp column": "Timestamp",
+        "Value column": "Value"
+    }
+}
+```
+
+`$DataSetId` is replaced by the data set identifier; `$StartPoint(...)` provides the last successfully ingested timestamp.
+
+**Hot folder inbound connection:**
+
+```json
+{
+    "driver": "File System Inbound Connection Driver",
+    "name": "Hot Folder",
+    "settings": {
+        "File queue sort Order": "File Last Modified Ascending",
+        "More or Delete Source Files After Extraction": "Move Extracted Only",
+        "Path when Extraction Succeeds": "Processed"
+    },
+    "ruleCanOverride": {"Source paths": true}
+}
+```
+
+**Database inbound connection:**
+
+```json
+{
+    "driver": "Database Inbound Connection Driver",
+    "name": "Meteorology DB Server 1",
+    "settings": {
+        "Database Provider": "ODBC",
+        "Connection String": "Driver={SQL Server};Server=dbserver1.local;Database=Meteorology"
+    }
+}
+```
+
+**AQTS export rule profile:**
+
+```json
+{
+    "driver": "AQUARIUS Time-Series Export Driver",
+    "name": "AQTS Acquisition",
+    "settings": {
+        "AQUARIUS Time-Series username": "aquser",
+        "AQUARIUS Time-Series password": "password"
+    },
+    "ruleCanOverride": {"Parameter identifier": true, "Time-series label": true}
+}
+```
+
+**HTTP outbound connection (AQTS server):**
+
+```json
+{
+    "driver": "HTTP Outbound Connection Driver",
+    "name": "AQTS Server 1",
+    "settings": {
+        "Address": "http://aqserver1.local/"
+    }
+}
+```
+
+`Address` is the base URL of the AQTS server — omit the `/AQUARIUS/` suffix.
+
+#### Available drivers
+
+| Category | Driver |
+|----------|--------|
+| **Extraction** | Text File Extraction Driver |
+| | XML File Extraction Driver |
+| | Database Extraction Driver |
+| | Isodaq File Extraction Driver |
+| | Enviromon File Extraction Driver |
+| **Inbound Connection** | File System Inbound Connection Driver |
+| | FTP Inbound Connection Driver |
+| | HTTP File Inbound Connection Driver |
+| | Database Inbound Connection Driver |
+| **Export** | AQUARIUS Time-Series Export Driver |
+| **Outbound Connection** | HTTP Outbound Connection Driver |
+
+#### Key rules & gotchas
+
+- **`--restore` is destructive** — only use it for clean setups or full replacements
+- **`settingOverrides` only work for keys listed in `ruleCanOverride`**; otherwise they are silently ignored
+- **Rule profiles must exist before being referenced by name** in connectors; use `"ruleProfile": "Default"` with full `settingOverrides` when no shared profile is needed
+- **Delta migration must be complete before activating Connect** — see Delta Migration section
+
 ### Key Configuration Steps
 
-1. Identify all data sources and their connection types (FTP, HTTP, direct logger connection, etc.)
-2. Map each data source feed to its target AQUARIUS time series
-3. Configure scheduling and polling intervals
-4. Test ingestion with a small live data window before full activation
-5. Confirm Connect-ingested data aligns with the end of the EXIM-imported historical data (no gap, no overlap)
+1. Identify all data sources and their connection types (FTP, hot folder, database, HTTP, etc.)
+2. Map each data source feed to its target AQUARIUS time series (parameter ID + label + location identifier)
+3. Author the provisioning JSON (locations → connectors → schedules → rule profiles)
+4. Run the Provisioning Utility against the Connect server
+5. Test ingestion with a small live data window before full activation
+6. Confirm Connect-ingested data aligns with the end of the EXIM-imported historical data (no gap, no overlap)
 
 ### Delta Migration
 

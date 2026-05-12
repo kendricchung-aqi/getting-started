@@ -6,7 +6,7 @@ applyTo: "**"
 
 # Aquarius Onboarding Process
 
-This document defines the 8-phase implementation framework used to onboard clients onto AQUARIUS Time-Series (AQTS) and related AQI products. Follow these phases in order for every customer engagement.
+This document defines the 9-phase implementation framework used to onboard clients onto AQUARIUS Time-Series (AQTS) and related AQI products. Follow these phases in order for every customer engagement.
 
 ---
 
@@ -153,7 +153,74 @@ Even perfectly clean data will fail to import if the target time series does not
 
 ---
 
-## Phase 6 — Validation & Quality Assurance
+## Phase 6 — Connect Configuration & Data Backfill
+
+**Goal**: Configure AQUARIUS Connect for ongoing live ingestion and fill the data gap between the end of the historical import and the start of Connect ingestion.
+
+### Connect Setup
+
+Use the **AQUARIUS Connect Provisioning Utility** to configure Connect from a JSON file. See `aquarius-tools.instructions.md` for full JSON structure, driver options, and examples.
+
+Key configuration decisions to make before running the utility:
+
+- Identify all live data source types (FTP, hot folder, database, HTTP, etc.)
+- Map each source feed to its target AQUARIUS location identifier, parameter ID, and time series label
+- Define schedules (e.g., every 1 minute for real-time, hourly for aggregated feeds)
+- Confirm AQTS credentials and server address for the export rule profile
+
+Run the utility to provision Connect:
+
+```cmd
+AQUARIUSConnectProvisioningUtility.exe ^
+  --json=MyConfig.json ^
+  --hostname=my.connect.url ^
+  --port=80 ^
+  --username=myconnectuser ^
+  --password=myconnectpassword
+```
+
+Test with a small live data window before fully activating Connect.
+
+### Data Backfill
+
+After the historical EXIM import there is always a gap between:
+- **End of historical import** (e.g., data through the last export cutoff date)
+- **Start of Connect ingestion** (when Connect was activated)
+
+This gap **must be backfilled** before validation. The approach depends on where the data is available:
+
+#### Option A — Backfill via EXIM Importer (preferred when legacy source still holds the gap data)
+
+1. Extract the gap period from the legacy system using the same method as the historical migration
+2. Transform and cleanse the data (same steps as Phases 3–4)
+3. Build `RawPoints.zip` archives covering only the gap period
+4. **Export existing AQTS data → delete time series via LocationDeleter → re-import combined data** (historical + gap), OR append gap-only ZIPs if AQUARIUS version supports appending without conflict
+5. Validate: confirm no gap or overlap at the boundaries
+
+#### Option B — Backfill via Connect (when data is available from the live source system)
+
+1. Pause Connect ingestion (if already active)
+2. Use Connect's backfill capability to replay data from the source system for the gap window
+3. Confirm Connect-backfilled data aligns with the end of the EXIM-imported historical data
+4. Resume normal Connect ingestion
+
+#### Decision guide
+
+| Condition | Use |
+|-----------|-----|
+| Legacy system still accessible and holds gap data | Option A (EXIM) |
+| Source system supports historical replay (e.g., database or FTP archive) | Option B (Connect backfill) |
+| Neither source is available for the gap | Document as a known gap; confirm with client |
+
+### Key Checks After Backfill
+
+- No timestamp gap at the boundary between historical and backfilled data
+- No duplicate timestamps at the overlap boundary
+- Backfill data follows the same UTC offset as the existing series
+
+---
+
+## Phase 7 — Validation & Quality Assurance
 
 **Goal**: Confirm imported data in AQUARIUS matches the legacy source data.
 
@@ -182,7 +249,7 @@ This phase often repeats. Fix issues, re-import affected series, re-validate. Do
 
 ---
 
-## Phase 7 — Client Review & Sign-Off
+## Phase 8 — Client Review & Sign-Off
 
 **Goal**: Confirm with the client that migrated data meets requirements and obtain formal acceptance.
 
@@ -196,7 +263,7 @@ This phase often repeats. Fix issues, re-import affected series, re-validate. Do
 
 ---
 
-## Phase 8 — Documentation & Handover
+## Phase 9 — Documentation & Handover
 
 **Goal**: Ensure the client can operate AQUARIUS independently and that the engagement is fully documented.
 
@@ -205,8 +272,6 @@ This phase often repeats. Fix issues, re-import affected series, re-validate. Do
 - **Migration summary**: what was migrated, date ranges, any exclusions
 - **Known issues list**: unresolved data quality issues, limitations, future work items
 - **Configuration documentation**: locations, time series, parameters provisioned; Connect configuration
-  - In this phase, it is wise to backfill data into AQTS. This is because AQConnect is set up to push live data, but it depends if the data that was between the Import and setting up Connect is available.
-  - Either use the Import to backfill the data (going through the Export, LocationDeleter to delete Time-series, update the data to contain points between given source data to when Connect was set up, and then reimporting the data) or use Connect to backfill but that depends on if the client has that data available from the source.
 - Updated internal records (CRM, project tracker)
 - Support for go-live activities if applicable
 - Based off initial discovery (number of locations, time-series, etc to be created), provide a assertion of what was created based off the source data (B.A, Statement of Work, Sample source data, etc).
