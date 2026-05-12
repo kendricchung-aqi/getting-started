@@ -1,6 +1,8 @@
 ---
-applyTo: "**"
+applyTo: "**", "tools/*"
 ---
+
+**If applicable, use any `README` or documentation files included with the tools**
 
 # Aquarius Tools & Configuration Reference
 
@@ -80,26 +82,38 @@ Where `mytasks.txt` contains:
 
 ---
 
-## EXIM Tools
+## EXIM Tools (Also called TimeSeriesExporter and TimeSeriesImporter)
 
 EXIM tools import and export raw time-series data into AQUARIUS Time-Series.
 
 ### Required File Structure
 
+You can use the Exporter to extract the required `JSON` files from AQTS as templates for your transformed data.
+
 EXIM expects a **`RawPoints.zip`** archive per time series, organized into a specific folder hierarchy:
 
 ```
 <LocationIdentifier>/
-  <ParameterId>.<Label>@<LocationIdentifier>/
-    RawPoints.zip
+    TimeSeries/
+        <Basic or Reflected (if any)>/
+            <ParameterId>.<Label>@<LocationIdentifier>/
+                TimeSeriesInfo.json
+                RawPoints.zip
+    LocationDatum.json
+    LocationInfo.json
 ```
 
 Example for Stage Telemetry at location `05JJ009`:
 
 ```
 05JJ009/
-  HG.Telemetry@05JJ009/
-    RawPoints.zip
+    TimeSeries/
+        Basic/
+            HG.Telemetry@05JJ009/
+                TimeSeriesInfo.json
+                RawPoints.zip
+    LocationDatum.json
+    LocationInfo.json
 ```
 
 ### RawPoints CSV Format (inside the ZIP)
