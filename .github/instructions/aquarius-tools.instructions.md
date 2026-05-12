@@ -116,14 +116,16 @@ Example for Stage Telemetry at location `05JJ009`:
     LocationInfo.json
 ```
 
+**Note: When using the Import after Exporting the data folders, make sure to delete the Time-series from all Locations using the LocationDeleter. This will prevent `IdenticalParameterAndLabelException` when using the Importer.**
+
 ### RawPoints CSV Format (inside the ZIP)
 
 The CSV inside `RawPoints.zip` must contain at minimum:
 
-| Column | Format | Example |
-|--------|--------|---------|
-| `TIME` | ISO 8601 | `2023-06-15T14:30:00` |
-| `VALUE` | Numeric | `1.452` |
+| Column | Format                                 | Example                     |
+|--------|----------------------------------------|-----------------------------|
+| `TIME` | ISO 8601 (with timezone if applicable) | `2023-06-15T14:30:00-05:00` |
+| `VALUE` | Numeric                                | `1.452`                     |
 
 Optional columns: `GRADE`, `QUALIFIER`, `APPROVAL`
 

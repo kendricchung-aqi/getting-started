@@ -205,6 +205,8 @@ This phase often repeats. Fix issues, re-import affected series, re-validate. Do
 - **Configuration documentation**: locations, time series, parameters provisioned; Connect configuration
 - Updated internal records (CRM, project tracker)
 - Support for go-live activities if applicable
+- Based off initial discovery (number of locations, time-series, etc to be created), provide a assertion of what was created based off the source data (B.A, Statement of Work, Sample source data, etc).
+- It should be clear what the customer can expect based off of their source data and what was created in AQTS. This will help to set expectations for the customer after the work has been completed or following a checkpoint with the customer.
 
 ### Transition
 
