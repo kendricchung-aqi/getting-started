@@ -2,6 +2,8 @@
 applyTo: "**"
 ---
 
+**Note: `data/<tenant>` folder holds all the data for the given tenant. Use that as the working directory.**
+
 # Aquarius Data Migration Reference
 
 This document covers the discovery, field mapping, data extraction, transformation, and validation specifics for migrating historical data into AQUARIUS Time-Series.

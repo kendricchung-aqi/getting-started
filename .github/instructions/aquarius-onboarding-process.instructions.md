@@ -2,6 +2,8 @@
 applyTo: "**"
 ---
 
+**Note: `data` folder holds the Aquarius Time-series and Connect credentials when needed to use the tools or APIs.**
+
 # Aquarius Onboarding Process
 
 This document defines the 8-phase implementation framework used to onboard clients onto AQUARIUS Time-Series (AQTS) and related AQI products. Follow these phases in order for every customer engagement.
@@ -203,6 +205,8 @@ This phase often repeats. Fix issues, re-import affected series, re-validate. Do
 - **Migration summary**: what was migrated, date ranges, any exclusions
 - **Known issues list**: unresolved data quality issues, limitations, future work items
 - **Configuration documentation**: locations, time series, parameters provisioned; Connect configuration
+  - In this phase, it is wise to backfill data into AQTS. This is because AQConnect is set up to push live data, but it depends if the data that was between the Import and setting up Connect is available.
+  - Either use the Import to backfill the data (going through the Export, LocationDeleter to delete Time-series, update the data to contain points between given source data to when Connect was set up, and then reimporting the data) or use Connect to backfill but that depends on if the client has that data available from the source.
 - Updated internal records (CRM, project tracker)
 - Support for go-live activities if applicable
 - Based off initial discovery (number of locations, time-series, etc to be created), provide a assertion of what was created based off the source data (B.A, Statement of Work, Sample source data, etc).

@@ -4,6 +4,21 @@ applyTo: "**", "tools/*"
 
 **If applicable, use any `README` or documentation files included with the tools**
 
+# Required tools for AQUARIUS onboarding include (in `tools` with their own folders):
+- ProvisioningTool.exe (and related documentation)
+- TimeSeriesExporter.exe (EXIM Exporter)
+- TimeSeriesImporter.exe (EXIM Importer)
+- LocationDeleter
+- AQUARIUS.Connect.Provisioning.Utility
+
+*Ensure all of these tools are available and accessible before starting the onboarding process.*
+
+## Credentials
+- Credentials for AQTS can be found in `data/aqts_connection.txt`
+- Credentials for AQConnect can be found in `data/aqconnect_connection.txt`
+
+*Ensure these credentials are available before starting the onboarding process.*
+
 # Aquarius Tools & Configuration Reference
 
 This document covers the tools used during AQUARIUS onboarding: the ProvisioningTool, EXIM, AQUARIUS Connect, and common scripting utilities.
