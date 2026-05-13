@@ -134,9 +134,20 @@ Even perfectly clean data will fail to import if the target time series does not
 
 ### Key Tasks
 
+- Run the Export after provisioning the tenant with all of the locations, time-series, parameters, etc. but before the Import as it prepares the correct folder structure and metadata
+```
+Locations/
+    <LocationIdentifier>/
+        TimeSeries/
+            <Basic or Reflected (if any)>/
+                <ParameterId>.<Label>@<LocationIdentifier>/
+                    TimeSeriesInfo.json
+                    RawPoints.zip
+        LocationDatum.json
+        LocationInfo.json
+```
+- After running the Export, use the `LocationDeleter` to delete all time-series (NOT LOCATIONS) as the Importer will get into an error if not
 - Use AQUARIUS EXIM tools to import raw time series data
-- Make sure to run the Export before the Import as it prepares the correct folder structure and metadata
-- Use the `LocationDeleter` to remote the existing all time-series (NOT LOCATIONS) as the Importer will get into an error if not
 - **Sequence imports carefully**:
   - Import parent (raw) series before child (derived/corrected) series
   - Import one location at a time for large or complex migrations

@@ -16,17 +16,17 @@ This document covers the discovery, field mapping, data extraction, transformati
 
 Before planning a migration, gather the following from the client or BA document:
 
-| Item | Questions to Answer |
-|------|-------------------|
-| **Legacy system** | What system holds the data? (Hydstra, OTT, SQL DB, flat files?) |
-| **Locations** | How many stations/sites? What are their identifiers in the legacy system? |
-| **Parameters** | What parameters are measured at each location? What are the legacy parameter codes? |
-| **Date ranges** | What is the earliest date to migrate? Are there gaps in coverage? |
-| **Data frequency** | What is the recording interval? (5-min, 15-min, hourly, daily?) |
-| **Time zones** | What time zone is the data stored in? Is DST observed? |
-| **Volume** | Estimated total number of records per series? |
-| **Metadata** | Are grades, qualifiers, or approval levels recorded in the legacy system? |
-| **Naming** | What naming conventions should be used in AQUARIUS? |
+| Item | Questions to Answer                                                                                                                                   |
+|------|-------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Legacy system** | What system holds the data? (Hydstra, OTT, SQL DB, flat files?)                                                                                       |
+| **Locations** | How many stations/sites? What are their identifiers in the legacy system?                                                                             |
+| **Parameters** | What parameters are measured at each location? What are the legacy parameter codes? Can source parameters already be mapped to that AQTS already has? |
+| **Date ranges** | What is the earliest date to migrate? Are there gaps in coverage?                                                                                     |
+| **Data frequency** | What is the recording interval? (5-min, 15-min, hourly, daily?)                                                                                       |
+| **Time zones** | What time zone is the data stored in? Is DST observed?                                                                                                |
+| **Volume** | Estimated total number of records per series?                                                                                                         |
+| **Metadata** | Are grades, qualifiers, or approval levels recorded in the legacy system?                                                                             |
+| **Naming** | What naming conventions should be used in AQUARIUS?                                                                                                   |
 
 ### Field Mapping Document
 

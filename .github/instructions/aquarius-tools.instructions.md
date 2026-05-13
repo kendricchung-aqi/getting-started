@@ -24,6 +24,10 @@ applyTo: "**", "tools/*"
 
 This document covers the tools used during AQUARIUS onboarding: the ProvisioningTool, EXIM, AQUARIUS Connect, and common scripting utilities.
 
+# Wikis
+
+In this repo, detailed instructions for each tool are provided in separate wiki pages linked below. These pages include step-by-step guides, file format specifications, and best practices for using each tool effectively.
+
 ---
 
 ## ProvisioningTool
@@ -109,27 +113,29 @@ You can use the Exporter to extract the required `JSON` files from AQTS as templ
 EXIM expects a **`RawPoints.zip`** archive per time series, organized into a specific folder hierarchy:
 
 ```
-<LocationIdentifier>/
-    TimeSeries/
-        <Basic or Reflected (if any)>/
-            <ParameterId>.<Label>@<LocationIdentifier>/
-                TimeSeriesInfo.json
-                RawPoints.zip
-    LocationDatum.json
-    LocationInfo.json
+Locations/
+    <LocationIdentifier>/
+        TimeSeries/
+            <Basic or Reflected (if any)>/
+                <ParameterId>.<Label>@<LocationIdentifier>/
+                    TimeSeriesInfo.json
+                    RawPoints.zip
+        LocationDatum.json
+        LocationInfo.json
 ```
 
 Example for Stage Telemetry at location `05JJ009`:
 
 ```
-05JJ009/
-    TimeSeries/
-        Basic/
-            HG.Telemetry@05JJ009/
-                TimeSeriesInfo.json
-                RawPoints.zip
-    LocationDatum.json
-    LocationInfo.json
+Locations/
+    05JJ009/
+        TimeSeries/
+            Basic/
+                HG.Telemetry@05JJ009/
+                    TimeSeriesInfo.json
+                    RawPoints.zip
+        LocationDatum.json
+        LocationInfo.json
 ```
 
 **Note: When using the Import after Exporting the data folders, make sure to delete the Time-series from all Locations using the LocationDeleter. This will prevent `IdenticalParameterAndLabelException` when using the Importer.**
@@ -169,6 +175,14 @@ Always resolve log errors before proceeding with the next location or phase.
 ## AQUARIUS Connect
 
 **AQUARIUS Connect** is the middleware that configures and manages ongoing inbound data feeds into AQTS — the production replacement for manual data imports once the system is live.
+
+### Authentication via the API
+
+- Use the API `/AQConnect/api/credentials/login` with the body:
+```json
+{"userName":"<username>","password":"<password>"}
+```
+- After this, you can use that session for future requests
 
 ### Role in Onboarding
 
@@ -440,19 +454,22 @@ Rule profiles are reusable named driver configurations. They have `driver`, `nam
 
 #### Available drivers
 
-| Category | Driver |
-|----------|--------|
-| **Extraction** | Text File Extraction Driver |
-| | XML File Extraction Driver |
-| | Database Extraction Driver |
-| | Isodaq File Extraction Driver |
-| | Enviromon File Extraction Driver |
+| Category | Driver                                |
+|----------|---------------------------------------|
+| **Extraction** | Text File Extraction Driver           |
+| | XML File Extraction Driver            |
+| | JSON Extraction Driver                |
+| | Database Extraction Driver            |
+| | Isodaq File Extraction Driver         |
+| | Enviromon File Extraction Driver      |
 | **Inbound Connection** | File System Inbound Connection Driver |
-| | FTP Inbound Connection Driver |
-| | HTTP File Inbound Connection Driver |
-| | Database Inbound Connection Driver |
-| **Export** | AQUARIUS Time-Series Export Driver |
-| **Outbound Connection** | HTTP Outbound Connection Driver |
+| | FTP Inbound Connection Driver         |
+| | HTTP File Inbound Connection Driver   |
+| | Database Inbound Connection Driver    |
+| **Export** | AQUARIUS Time-Series Export Driver    |
+| **Outbound Connection** | HTTP Outbound Connection Driver       |
+
+**List via API use: `/AQConnect/api/extractiondrivers?page=1&pageSize=100&sort=displayName-asc`**
 
 #### Key rules & gotchas
 
