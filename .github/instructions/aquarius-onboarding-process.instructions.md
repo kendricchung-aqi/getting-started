@@ -40,6 +40,8 @@ This document defines the 9-phase implementation framework used to onboard clien
 
 ---
 
+**During any phase 2, 3, 4, 5, and 6, make sure to validate against the source data.**
+
 ## Phase 2 — Aquarius Configuration
 
 **Goal**: Ensure AQUARIUS is fully configured to receive data before any import is attempted. Import will fail if the target locations and time series do not exist.
@@ -133,6 +135,8 @@ Even perfectly clean data will fail to import if the target time series does not
 ### Key Tasks
 
 - Use AQUARIUS EXIM tools to import raw time series data
+- Make sure to run the Export before the Import as it prepares the correct folder structure and metadata
+- Use the `LocationDeleter` to remote the existing all time-series (NOT LOCATIONS) as the Importer will get into an error if not
 - **Sequence imports carefully**:
   - Import parent (raw) series before child (derived/corrected) series
   - Import one location at a time for large or complex migrations

@@ -3,6 +3,7 @@ applyTo: "**", "tools/*"
 ---
 
 **If applicable, use any `README` or documentation files included with the tools**
+**If applicable, store the data used by the tools in the `data` folder**
 
 # Required tools for AQUARIUS onboarding include (in `tools` with their own folders):
 - ProvisioningTool.exe (and related documentation)
